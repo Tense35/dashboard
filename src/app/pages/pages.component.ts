@@ -1,16 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 
+// Propios
+import { SettingsService } from '../services/settings.service';
+
+declare function customInitFunctions(): void;
+
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
   styles: [
   ]
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements OnInit 
+{
 
-  constructor() { }
+  constructor( private settingsService: SettingsService ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    customInitFunctions();
   }
 
 }
