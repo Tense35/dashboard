@@ -104,6 +104,15 @@ a.link:hover, a.link:focus {
     background: #028ee1; }
 
 /*******************
+/*Buttons
+*******************/
+
+.page-wrapper, .page-titles
+{
+  background-color: #23344D;
+}
+
+/*******************
 /*sidebar navigation
 *******************/
 .card-no-border .left-sidebar,
