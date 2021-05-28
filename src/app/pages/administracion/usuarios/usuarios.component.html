@@ -1,0 +1,71 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <input class="form-control" type="text" placeholder="Buscar usuario..." (keyup)="buscar( txtBuscar.value )"  #txtBuscar/>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando..</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere..</p>
+        </div>
+    </div>
+</div>
+
+<div class="row animated FadeIn fast" *ngIf="!loading">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Total de usuarios ({{ totalUsuarios }})</h4>
+                <h6 class="card-subtitle">Usuarios registrados en la base de datos</h6>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="w100">Avatar</th>
+                                <th>Email</th>
+                                <th>Nombre</th>
+                                <th class="w100">Estado</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="animated fadeIn fast" *ngFor="let usuario of usuarios">
+                                <td class="text-center">
+                                    <img class="avatar" [src]="usuario.imagen" [alt]="usuario.nombre">
+                                </td>
+                                <td>{{ usuario.email }}</td>
+                                <td>{{ usuario.nombre }}</td>
+                                <td>
+                                    <label *ngIf="usuario.estado" class="label label-primary">Activo</label>
+                                    <label *ngIf="!usuario.estado" class="label label-danger">Inactivo</label>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a href="#" class="cursor" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a *ngIf="usuario.estado" (click)="eliminar( usuario.email )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a *ngIf="!usuario.estado" (click)="activar( usuario.email )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div *ngIf="txtBuscar.value.length === 0" >
+                    <button (click)="cambiarPagina(-10)" class="btn btn-secundary">Anteriores</button>
+                    &nbsp;
+                    <button (click)="cambiarPagina(10)" class="btn btn-secundary">Siguientes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

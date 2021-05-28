@@ -1,51 +1,207 @@
-/*
-Template Name: Admin pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*
-Template Name: Admin Pro Admin
-Author: Wrappixel
-Email: niravjoshi87@gmail.com
-File: scss
-*/
-/*Theme Colors*/
-/*bootstrap Color*/
-/*Light colors*/
-/*Normal Color*/
-/*Extra Variable*/
-/*******************
-Login register and recover password Page
-******************/
-.login-register {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    height: 100%;
+.pag 
+{
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  min-height: 100%;
+  width: 100%;
+  background-color: #67757c !important;
+}
+
+.root
+{
+  width: 100%;
+}
+
+.pag-container
+{
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
+
+.centrado
+{
+  border-radius: 8px;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  color: #FFF;
+  display: flex;
+  flex-direction: row;
+  font-family: "Arial-Rounded-Bold";
+  height: 520px;
+  width: 80%;
+}
+
+.login-section
+{
+  border: 1px;
+  display: flex;
+  padding: 15px;
+}
+
+.login-section div h3 
+{
+  font-family: "Arial-Rounded-Bold";
+  color: #FFF;
+}
+
+.login-logo 
+{
+  align-items: center;
+  background-color: #23344D;
+  border: 1px #23344D solid;
+  border-bottom-left-radius: 8px;
+  justify-content: center;
+  border-top-left-radius: 8px;
+  width: 40%;
+}
+
+.login-logo img
+{
+  width: 75%;
+}
+
+.login-inputs
+{
+  align-items: center;
+  background-color: #2E4866;
+  border: 1px #2E4866 solid;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 60%;
+}
+
+.login-inputs > div 
+{
+  width: 85%;
+}
+
+.login-inputs h3 
+{
+  font-size: 40px;
+  margin: 10px 0px;
+  text-align: center;
+}
+
+.login-inputs form 
+{
+  display: flex;
+  flex-direction: column;
+  margin: 20px 5px;
+}
+
+.login-inputs input
+{
+  background-color: transparent;
+  border: 1px transparent solid;
+  border-bottom: 3px solid #FFF;
+  color: #FFF;
+  margin: 10px 0px;
+  font-size: 25px;
+  padding: 8px 2px 4px 2px;
+  width: 100%;
+}
+
+.login-inputs input:focus
+{
+  border-bottom: 3px solid #23344D;
+}
+
+.login-error
+{
+  font-weight: bold;
+  margin-top: -5px;
+  margin-bottom: -7px;
+}
+
+.login-button
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.login-button button
+{
+  background-color: transparent;
+  border: 3px solid #23344D;
+  border-radius: 8px;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 23px;
+  margin: 0px 0px 15px 0px;
+  padding: 5px 5px;
+}
+
+.login-button a 
+{
+  color: #FFF;
+  text-decoration: none;
+}
+
+.login-button button:hover
+{
+  background-color: #23344D;
+}
+
+/* Cambiar color del placeholder del input */
+::-webkit-input-placeholder 
+{ 
+  color: #FFF; 
+} 
+
+:-moz-placeholder 
+{ 
+  /* Firefox 18- */ 
+  color: #FFF; 
+} 
+
+::-moz-placeholder 
+{ 
+  /* Firefox 19+ */ color: #FFF; 
+} 
+
+:-ms-input-placeholder 
+{ 
+  color: #FFF; 
+}
+
+/* Eliminar efectos focus default de los inputs */
+input:focus, input.form-control:focus 
+{
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  outline:none !important;
+  outline-width: 0 !important;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) 
+{
+  .login-logo
+  {
+    display: none;
+  }
+
+  .login-inputs
+  {
+    border-radius: 8px;
     width: 100%;
-    padding: 10% 0;
-    position: fixed; }
-  
-  .login-box {
-    width: 400px;
-    margin: 0 auto; }
-    .login-box .footer {
-      width: 100%;
-      left: 0px;
-      right: 0px; }
-    .login-box .social {
-      display: block;
-      margin-bottom: 30px; }
-  
-  #recoverform {
-    display: none; }
-  
-  .login-sidebar {
-    padding: 0px;
-    margin-top: 0px; }
-    .login-sidebar .login-box {
-      right: 0px;
-      position: absolute;
-      height: 100%; }
-  
+  }
+}
+
+@media screen and (max-width: 600px) 
+{
+  .centrado
+  {
+    width: 90%;
+  }
+}
+

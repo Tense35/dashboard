@@ -9,6 +9,7 @@ import { PagesRoutingModule } from './pages/pages.routing';
 
 // Componentes
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = 
 [

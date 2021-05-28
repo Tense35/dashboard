@@ -5,3 +5,42 @@
     -webkit-animation-fill-mode:both;
     animation-fill-mode:both
 }
+
+#themecolors .selector, .cursor
+{
+    cursor: pointer;
+}
+
+.w100
+{
+    width: 100px;
+}
+
+.avatar
+{
+    width: 50px;
+}
+
+@font-face
+{
+    font-family: "Arial-Rounded";
+    src: url('assets/fonts/arial-rounded-mt.ttf');
+}
+
+@font-face
+{
+    font-family: "Arial-Rounded-Bold";
+    src: url('assets/fonts/arial-rounded-mt-bold.ttf');
+}
+
+@font-face
+{
+    font-family: "Montserrat";
+    src: url('assets/fonts/MONTSERRAT-REGULAR.TTF');
+}
+
+@font-face
+{
+    font-family: "Montserrat-Bold";
+    src: url('assets/fonts/MONTSERRAT-BOLD.TTF');
+}

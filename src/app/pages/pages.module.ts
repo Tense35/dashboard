@@ -2,7 +2,7 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 // Propios
 // Módulos
@@ -17,6 +17,8 @@ import { PagesComponent } from './pages.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { UsuariosComponent } from './administracion/usuarios/usuarios.component';
 
 
 
@@ -30,12 +32,15 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     ProgressComponent,
     PromesasComponent,
     RxjsComponent,
+    PerfilComponent,
+    UsuariosComponent,
   ],
   imports: 
   [
     CommonModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     ComponentsModule,
     SharedModule
   ],
