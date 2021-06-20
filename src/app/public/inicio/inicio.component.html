@@ -1,0 +1,68 @@
+<div class="dn-container">
+
+    <!-- Inicio -->
+
+    <div class="dn-inicio">
+        <h2>GOLD KIDS</h2>
+        <p>NOS CARACTERIZA EL TRABAJO HECHO CON CALIDAD</p>
+    </div>
+
+    <!-- Fin inicio -->
+
+    <!-- Catálogo -->
+    
+    <div class="dn-center">
+
+        <h1 class="text-uppercase mb-4 color text-center mt-5">Nuestro catálago</h1>
+    
+        <div class="d-container-full">
+            <div class="d-container-buttons">
+
+                <button *ngFor="let categoria of categorias" (click)="obtenerProductos(categoria.id_categoria)">{{ categoria.nombre | titlecase }}</button>
+
+            </div>
+        </div>
+
+        <div class="d-container-full">
+            <div class="d-container-card">
+    
+                <div *ngFor="let producto of productos" class="d-card">
+        
+                    <div class="d-card-info">
+                        <div class="d-card-image">
+                            <img [src]="producto.imagen" [alt]="producto.nombre">
+                        </div>
+            
+                        <div class="d-card-content">
+                            <h5>{{producto.nombre | titlecase}}</h5>
+                            <p><b>Tallas: </b> {{producto.talla}}</p>
+                            <p><b>Género: </b> <i [class]="producto.genero | genero"></i></p>
+                            <p><b>Precio: </b> {{producto.precio}}</p>
+                        </div>
+                    </div>
+        
+                    <div class="d-card-button">
+                        <button routerLink="../producto/{{producto.id_producto}}">Ver más..</button>
+                    </div>
+        
+                </div>
+        
+            </div>
+        </div>
+    </div>
+
+    <!-- Fin catálogo -->
+
+    <!-- Formulario de contacto -->
+
+    <div class="dn-center mt-5">
+        <app-contacto-inicio></app-contacto-inicio>
+    </div>
+
+    <!-- Fin formulario de contacto -->
+
+</div>
+
+
+
+

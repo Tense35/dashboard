@@ -5,8 +5,6 @@ import { FormsModule } from "@angular/forms";
 import { ChartsModule } from 'ng2-charts';
 
 // Propios
-import { IncrementadorComponent } from './incrementador/incrementador.component';
-import { DonaComponent } from './dona/dona.component';
 
 
 
@@ -14,8 +12,6 @@ import { DonaComponent } from './dona/dona.component';
 @NgModule({
   declarations: 
   [
-    IncrementadorComponent,
-    DonaComponent
   ],
   imports: 
   [
@@ -25,8 +21,6 @@ import { DonaComponent } from './dona/dona.component';
   ],
   exports:
   [
-    IncrementadorComponent,
-    DonaComponent
   ]
 })
 export class ComponentsModule { }

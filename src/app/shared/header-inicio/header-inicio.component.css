@@ -1,0 +1,13 @@
+.dn-container
+{
+    justify-content: center;
+    align-items: center;
+    background-color: #1A1A1A;
+    border: 1px #171A19 solid;
+    min-height: 65px;
+}
+
+p-menubar
+{
+    width: 100%;
+}

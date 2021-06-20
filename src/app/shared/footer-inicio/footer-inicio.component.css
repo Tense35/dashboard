@@ -1,0 +1,41 @@
+.dn-container
+{
+    flex-direction: column;
+}
+
+p
+{
+    margin: 2px;
+    font-family: "Arial-Rounded", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+
+h4
+{
+    font-family: "Arial-Rounded-Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    color: #FCA311;
+}
+
+.dn-flex-column
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.dn-info
+{
+    background-color: #FAFBFD;
+    min-height: 300px;
+    color: #000;
+}
+
+.dn-derechos
+{
+    background-color: #F4f4f4;
+    color: #000;
+    min-height: 100px;
+}

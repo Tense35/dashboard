@@ -12,13 +12,10 @@ import { SharedModule } from '../shared/shared.module';
 // Componentes
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { Grafica1Component } from './grafica1/grafica1.component';
 import { PagesComponent } from './pages.component';
-import { ProgressComponent } from './progress/progress.component';
-import { PromesasComponent } from './promesas/promesas.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './administracion/usuarios/usuarios.component';
+import { PagesRoutingModule } from './pages.routing';
 
 
 
@@ -27,11 +24,7 @@ import { UsuariosComponent } from './administracion/usuarios/usuarios.component'
   [
     AccountSettingsComponent,
     DashboardComponent,
-    Grafica1Component,
     PagesComponent,
-    ProgressComponent,
-    PromesasComponent,
-    RxjsComponent,
     PerfilComponent,
     UsuariosComponent,
   ],
@@ -42,17 +35,14 @@ import { UsuariosComponent } from './administracion/usuarios/usuarios.component'
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
-    SharedModule
+    SharedModule,
+    PagesRoutingModule
   ],
   exports:
   [
     AccountSettingsComponent,
     DashboardComponent,
-    Grafica1Component,
     PagesComponent,
-    ProgressComponent,
-    PromesasComponent,
-    RxjsComponent
   ]
 })
 export class PagesModule { }

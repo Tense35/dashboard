@@ -4,9 +4,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 // Propios
+import { ContactoInicioComponent } from './contacto-inicio/contacto-inicio.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { FooterInicioComponent } from './footer-inicio/footer-inicio.component';
 import { HeaderComponent } from './header/header.component';
+import { HeaderInicioComponent } from './header-inicio/header-inicio.component';
+import { PrimengModule } from '../primeng/primeng.module';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 
@@ -14,19 +18,26 @@ import { HeaderComponent } from './header/header.component';
   declarations: 
   [
     BreadcrumbsComponent,
-    SidebarComponent,
+    ContactoInicioComponent,
+    FooterInicioComponent,
     HeaderComponent,
+    HeaderInicioComponent,
+    SidebarComponent,
   ],
   imports: 
   [
     CommonModule,
-    RouterModule
+    RouterModule,
+    PrimengModule
   ],
   exports:
   [
     BreadcrumbsComponent,
-    SidebarComponent,
+    ContactoInicioComponent,
+    FooterInicioComponent,
     HeaderComponent,
+    HeaderInicioComponent,
+    SidebarComponent
   ]
 })
 export class SharedModule { }

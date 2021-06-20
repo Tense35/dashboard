@@ -9,14 +9,19 @@ import { PagesRoutingModule } from './pages/pages.routing';
 
 // Componentes
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { LoginComponent } from './auth/login/login.component';
+import { PublicModule } from './public/public.module';
 
 const routes: Routes = 
 [
   // path: '/dashboard' PagesRouting
   // path: '/auth' AuthRouting
 
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  {
+    path: '', loadChildren: () => import('./public/public.module').then(m => m.PublicModule)
+  },
+  {
+    path: 'dashboard', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
+  },
   { path: '**', component: NopagefoundComponent  },
 ];
 
@@ -25,7 +30,8 @@ const routes: Routes =
   [
     RouterModule.forRoot( routes ),
     AuthRoutingModule,
-    PagesRoutingModule
+    PagesRoutingModule,
+    PublicModule
   ],
   exports: 
   [
