@@ -20,7 +20,6 @@ export class ProductosService
   obtenerProductos( categoria: number = 0, estado: string = 'true' )
   {
 
-
     const restriccionCategoria = ( categoria === 0)? 'false' : categoria ;
 
     return this.http.get(`${ base_url }/productos?categoria=${ restriccionCategoria }&estado=${ estado }`)

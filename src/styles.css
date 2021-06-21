@@ -50,6 +50,12 @@
 
 @font-face
 {
+    font-family: "Firma-Font";
+    src: url('assets/fonts/Across-the-Road.ttf');
+}
+
+@font-face
+{
     font-family: "Arial-Rounded-Bold";
     src: url('assets/fonts/arial-rounded-mt-bold.ttf');
 }

@@ -1,0 +1,261 @@
+<div class="dn-container">
+    <div class="dn-center">
+  
+      <!-- Step -->
+  
+      <div class="dn-step">
+  
+        <div class="dn-w100">
+          <div class="dn-rounded">
+            <p>{{pag+1}}</p>
+          </div>
+        </div>
+  
+        <div class="dn-w100 dn-mt1">
+          <p>{{steps[pag]}}</p>
+        </div>
+  
+      </div>
+  
+      <!-- End Step -->
+  
+      <!-- Forms -->
+  
+      <div class="dn-forms">
+  
+        <!-- Información personal -->
+  
+        <form *ngIf="pag === 0" class="dn-info-personal" [formGroup]="personalesForm" (submit)="nextStape('personalesForm')">
+  
+          <span class="dn-input-info">Tipo de documento</span>
+          <select formControlName="tipo_id" aria-label="Seleccionar el tipo de documento">
+            <option value="" selected>Seleccionar el tipo de documento</option>
+            <option value="CC">Cédula de ciudadanía</option>
+            <option value="TI">Tarjeta de identidad</option>
+          </select>
+          <label *ngIf="validar('tipo_id')" class="lbl-error">El tipo de documento es obligatorio</label>
+  
+          <span class="dn-input-info dn-mt1">Número de documento</span>
+          <input formControlName="id_cliente" maxlength="13" type="text" (keyup)="regex(1, 'id_cliente', 'personalesForm')">
+          <label *ngIf="validar('id_cliente')" class="lbl-error">El número de documento no es válido</label>
+  
+          <span class="dn-input-info dn-mt2">Nombre completo</span>
+          <input formControlName="nombre" type="text">
+          <label *ngIf="validar('nombre')" class="lbl-error">El nombre proporcionado no es válido</label>
+  
+          <span class="dn-input-info dn-mt2">Número celular</span>
+          <input formControlName="celular" type="text" maxlength="10" (keyup)="regex(2, 'celular', 'personalesForm')">
+          <label *ngIf="validar('celular')" class="lbl-error">El número proporcionado no es válido</label>
+  
+          <span class="dn-input-info dn-mt2">Correo electrónico</span>
+          <input formControlName="email" type="email">
+          <label *ngIf="validar('email')" class="lbl-error">El email proporcionado no es válido</label>
+  
+          <button type="submit">
+            Continuar con la compra
+          </button>
+  
+        </form>
+  
+        <!-- Fin Información personal -->
+  
+        <!-- Datos de envío -->
+  
+        <form *ngIf="pag === 1" class="dn-info-personal" [formGroup]="envioForm" (submit)="nextStape('envioForm')"> 
+  
+          <span class="dn-input-info dn-mt1">Municipio</span>
+          <select formControlName="municipio" aria-label="Selecciona un municipio">
+            <option value="" selected>Selecciona un municipio</option>
+            <option value="Barbosa">Barbosa</option>
+            <option value="Bello">Bello</option>
+            <option value="Caldas">Caldas</option>
+            <option value="Copacabana">Copacabana</option>
+            <option value="Envigado">Envigado</option>
+            <option value="Itagüi">Itagüi</option>
+            <option value="La Estrella">La Estrella</option>
+            <option value="Medellín">Medellín</option>
+            <option value="Sabaneta">Sabaneta</option>
+          </select>
+          <label *ngIf="validar('municipio', 'envioForm')" class="lbl-error">Debes seleccionar un municipio</label>
+  
+          <span class="dn-input-info dn-mt2">Barrio</span>
+          <input type="text" formControlName="barrio">
+          <label *ngIf="validar('barrio', 'envioForm')" class="lbl-error">Este campo es obligatorio</label>
+  
+          <span class="dn-input-info dn-mt2">Dirección</span>
+          <input type="text" formControlName="tempDireccion">
+          <label *ngIf="validar('tempDireccion', 'envioForm')" class="lbl-error">Este campo es obligatorio</label>
+  
+          <button type="submit">
+            Continuar con la compra
+          </button>
+  
+        </form>
+  
+        <!-- Fin de Datos de envío -->
+  
+        <!-- Pago -->
+  
+        <form *ngIf="pag === 2" class="dn-info-personal" [formGroup]="pagoForm" (submit)="nextStape('pagoForm')">
+  
+          <span class="dn-input-info">Método de pago</span>
+          <select aria-label="Default select example" formControlName="payment_method_type">
+            <option value="" selected>Seleccionar método de pago</option>
+            <option value="CARD">Tarjeta</option>
+            <option value="NEQUI">Nequi</option>
+            <option value="PSE">PSE</option>
+          </select>
+          <label *ngIf="validar('payment_method_type', 'pagoForm')" class="lbl-error">Selecciona un método de pago.</label>
+  
+          <!-- Tarjeta -->
+  
+          <div class="empty">
+            <div class="contenedor">
+  
+              <div (click)="tarjetaFrente = !tarjetaFrente" class="contenedor-tarjeta">
+    
+                <section [className]="(tarjetaFrente)? 'tarjeta' : 'tarjeta active' "id="tarjeta">
+    
+                  <div class="frente tarjeta-card">
+      
+                    <div class="logo-marca">
+                      <img src="./../../../assets/images/GoldKids/Cards/Iconos/visa.png" alt="">
+                    </div>
+      
+                    <img class="chip" src="./../../../assets/images/GoldKids/Cards/Iconos/chip-tarjeta.png" alt="Chip">
+      
+                    <div class="datos">
+      
+                      <div class="grupo" id="numero">
+                        <p class="label">Número tarjeta</p>
+                        <p class="numero">{{ pagoForm.controls.number.value | card }}</p>
+                      </div>
+      
+                      <div class="flexbox">
+      
+                        <div class="grupo" id="nombre">
+                          <p class="label">Titular Tarjeta</p>
+                          <p class="nombre">{{ pagoForm.controls.card_holder.value | cardEmpty:'DANIEL SALAZAR' }}</p>
+                        </div>
+      
+                        <div class="grupo" id="expiracion">
+                          <p class="label">Expiración</p>
+                          <p class="expiracion">
+                            <span class="mes">{{pagoForm.controls.exp_month.value | cardEmpty:'MM'}}</span> 
+                            / 
+                            <span class="year">{{pagoForm.controls.exp_year.value | cardEmpty:'AA'}}</span>
+                          </p>
+                        </div>
+      
+                      </div>
+      
+                    </div>
+      
+                  </div>
+      
+                  <div class="atras tarjeta-card">
+      
+                    <div class="barra-magnetica"></div>
+                    <div class="datos">
+                      <div class="grupo" id="firma">
+      
+                        <p class="label">Firma</p>
+                        <div class="firma"><p>Daniel Salazar</p></div>
+      
+                      </div>
+      
+                      <div class="grupo" id="ccv">
+      
+                        <div class="label">CCV</div>
+                        <p class="ccv">{{pagoForm.controls.cvc.value | cardEmpty:''}}</p>
+      
+                      </div>
+                      
+                    </div>
+      
+                    <p class="leyenda">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus repellat consequatur ab deserunt eum iure neque?
+                    </p>
+      
+                  </div>
+      
+                </section>
+    
+              </div>
+            
+            </div>
+    
+            <!-- Form Tarjeta -->
+    
+            <span class="dn-input-info dn-mt1">Número de la tarjeta</span>
+            <input type="text" formControlName="number" maxlength="16" (click)="tarjetaFrente = true">
+            <label *ngIf="validar('number', 'pagoForm')" class="lbl-error">El número no es válido.</label>
+    
+            <span class="dn-input-info dn-mt2">Titular de la tarjeta</span>
+            <input type="text" formControlName="card_holder" maxlength="40" (click)="tarjetaFrente = true">
+            <label *ngIf="validar('card_holder', 'pagoForm')" class="lbl-error">Este campo es obligatorio.</label>
+  
+            <div class="fecha-exp">
+  
+              <div class="fecha-month">
+                <span class="dn-input-info dn-mt2">Mes</span>
+                <select formControlName="exp_month" aria-label="Mes" (click)="tarjetaFrente = true">
+                  <option value="" selected>Mes</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <label *ngIf="validar('exp_month', 'pagoForm')" class="lbl-error">El campo mes es obligatorio</label>
+              </div>
+  
+              <div class="fecha-year">
+                <span class="dn-input-info dn-mt2">Año</span>
+                <select formControlName="exp_year" aria-label="Año" (click)="tarjetaFrente = true">
+                  <option value="" selected>Año</option>
+                  <option *ngFor="let year of cardYears" value="{{year}}">{{year}}</option>
+                </select>
+                <label *ngIf="validar('exp_year', 'pagoForm')" class="lbl-error">El campo año es obligatorio</label>
+              </div>
+  
+              <div class="fecha-cvc">
+                <span class="dn-input-info dn-mt2">CCV</span>
+                <input type="text" formControlName="cvc" maxlength="3" (keyup)="regex(2, 'cvc', 'pagoForm')" (click)="tarjetaFrente = false">
+                <label *ngIf="validar('cvc', 'pagoForm')" class="lbl-error">El código cvc no es válido</label>
+              </div>
+  
+            </div>
+  
+            <span class="dn-mt2" class="check-form dn-mt2"> 
+              <input class="check" type="checkbox" id="terms" formControlName="terms" value="{{tokenTerminos.acceptance_token}}">
+              Acepto haber leido los <a class="resaltado" href="{{tokenTerminos.permalink}}">términos y condiciones y la política de privacidad</a> para hacer esta compra.
+            </span>
+            <label *ngIf="validar('terms', 'pagoForm')" class="lbl-error">Debes aceptar los términos y condiciones</label>
+  
+            
+          </div>
+  
+          <button type="submit">
+            Confirmar pago
+          </button>
+  
+        </form>
+  
+        <!-- Pago -->
+  
+      </div>
+  
+      <!-- End Forms -->
+  
+  
+    </div>
+  </div>
+  
