@@ -6,6 +6,8 @@ import Swal from 'sweetalert2'
 import { SearchService } from '../../../services/search.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/Usuario.model';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FileUploadService } from '../../../services/file-upload.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -20,7 +22,17 @@ export class UsuariosComponent implements OnInit
   public desde: number = 0;
   public loading: boolean = true;
 
-  constructor( private usuarioService: UsuarioService, private searchService: SearchService ) 
+  // Formulario
+  //@ts-ignore
+  public usuarioForm: FormBuilder.FormGroup;
+
+  // Imagen
+  //@ts-ignore
+  public archivo: File;
+  public imgTemp: any = null;
+  public usuarioSeleccionado: any;
+
+  constructor( private fb: FormBuilder, private usuarioService: UsuarioService, private searchService: SearchService, private fileUploadService: FileUploadService  ) 
   { 
 
   }
@@ -28,6 +40,13 @@ export class UsuariosComponent implements OnInit
   ngOnInit(): void 
   {
     this.obtenerUsuarios();
+
+    this.usuarioForm = this.fb.group
+    ({
+      nombre: ['', [ Validators.required ] ],
+      estado: ['', [ Validators.required ] ],
+      img: ['', [ Validators.required ] ],
+    });
   }
 
   obtenerUsuarios()
@@ -145,5 +164,98 @@ export class UsuariosComponent implements OnInit
       }
     })
   }
+
+  modificar( usuario: any )
+  {
+    this.usuarioSeleccionado = usuario;
+    console.log(this.usuarioSeleccionado);
+    this.imgTemp = this.usuarioSeleccionado.imagen;
+    console.log(this.imgTemp);
+    Swal.fire
+    ({
+      title: 'Modificar usuario',
+      html:
+        // Nombre
+        `<div class="card-body card-imagen"><h4 class="card-title">Avatar</h4><div class="text-center"><img src="${this.imgTemp}" class="img-avatar"></div><input type="file" (change)="cambiarImagen($event)" class="mt-4"><br><br></div>`
+        +
+        // Nombre
+        '<div class="form-group"><h5>Nombre</h5><div class="controls"><input type="text" name="text" class="form-control" required="" data-validation-required-message="This field is required" aria-invalid="false"> <div class="help-block"></div></div></div>'
+        +
+        // Estado
+        '<div class="form-group"><h5>Estado</h5><div class="controls"><select name="select" id="select" required="" class="form-control"><option value="">Selecciona un estado</option><option value="true">Activo</option><option value="false">Inactivo</option></select><div class="help-block"></div></div></div>' 
+        + 
+        '<input controlName="img" class="swal2-input">',
+      focusConfirm: false,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar edición',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Editar usuario',
+      
+      preConfirm: () => 
+      {
+        return[
+          this.usuarioForm.get('nombre').value,
+          this.usuarioForm.get('estado').value,
+        ]
+      }
+    }).then((result) => 
+    {
+      if (result.isConfirmed) 
+      {
+        this.actualizarImagen();
+      }
+    })
+    .catch( error => 
+    {
+      console.log(error);
+      Swal.fire('Error en la actualización de datos', 'Ha ocurrido un error' + error.msg, 'error');
+    });
+  }
+
+  // Imagen
+
+  cambiarImagen( event: any ): any
+  {
+    if ( !event?.target.files[0] )
+    {
+      console.log('null imagen');
+      return this.imgTemp = null;
+    }
+
+    if ( event?.target.files[0] )
+    {
+      this.archivo = event?.target.files[0];
+
+      // Convertir la imagen a string para mostrarla en la preview
+
+      const reader = new FileReader();
+      reader.readAsDataURL( this.archivo );
+      console.log('Procesando imagen');
+
+      reader.onloadend = () => 
+      {
+        this.imgTemp = reader.result;
+        console.log('Imagen procesada');
+      }
+    }
+  }
+
+  actualizarImagen()
+  {
+    this.fileUploadService.actualizarImagen( this.archivo, 'usuarios', this.usuarioSeleccionado.email ).then( img => 
+    {
+      const i = this.usuariosTemp.map( data => { return data.email === this.usuarioSeleccionado.email; }).indexOf(true);
+      this.usuariosTemp[i].estado = true;
+      this.usuarios[i].imagen = this.usuarioSeleccionado.imagen;
+      
+    }).catch( error => 
+    {
+      console.log(error);
+      Swal.fire('Error en la actualización de datos', 'Ha ocurrido un error' + error.msg, 'error');
+    });
+  }
+
+
 
 }

@@ -30,6 +30,11 @@
     width: 50px;
 }
 
+.swal2-html-container h5 
+{
+    text-align: left !important;
+}
+
 /* Animaciones */
 
 .fast
