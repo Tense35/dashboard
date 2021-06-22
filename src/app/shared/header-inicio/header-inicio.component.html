@@ -1,13 +1,41 @@
-<div class="dn-container">
-    <div class="dn-center">
-        <p-menubar [model]="items">
-            <ng-template pTemplate="start">
-                <img src="assets/showcase/images/primeng.svg" height="40" class="p-mr-2">
-            </ng-template>
-            <ng-template pTemplate="end">
-                <input type="text" pInputText placeholder="Search">
-            </ng-template>
-        </p-menubar>
-    </div>
+
+
+
+<header>
+   <img src="../../../assets/images/pez.jpeg" alt="">
+<nav>
+<ul>
+<li> <button routerLink="inicio">INICIO</button></li>
+<li><button routerLink="nosotros">NOSOTROS</button></li>
+<li><button routerLink="servicios">SERVICIOS</button></li>
+<li><button routerLink="contacto">CONTÁCTANOS</button></li>
+</ul>
+<div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <img src="../../../assets/images/carritoc.png"  alt="">
+            <div id="carrito" class="dropdown-menu" aria-labelledby="navbarCollapse">
+                <table id="lista-carrito" class="table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <button routerLink="inicio">Vaciar Carrito</button>
+                <button routerLink="inicio">Confirmar compra</button>
+            </div>
+        </li>
+    </ul>
 </div>
+
+</nav>
+</header>
+
+
 

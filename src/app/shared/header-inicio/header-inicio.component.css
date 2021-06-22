@@ -1,13 +1,62 @@
-.dn-container
-{
-    justify-content: center;
-    align-items: center;
-    background-color: #1A1A1A;
-    border: 1px #171A19 solid;
-    min-height: 65px;
+
+img{
+
+width: 15%;
+height: max-content;
+padding-top: 20px;
+padding-left: 70px;
+
 }
 
-p-menubar
-{
-    width: 100%;
+
+
+
+li{
+
+float: left;
+list-style: none;
+padding: 19px;
 }
+
+nav{
+
+float: right;
+margin-top: 50px;
+margin-right: 20px;
+background-color: black;
+
+
+}
+
+button{
+
+    font-family:"Arial-Rounded", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;;
+    font-weight: bold;
+    text-decoration: none;
+    color: aliceblue;
+    background-color: black;
+    outline: none;
+    font-size: 150% ;
+    border: black;
+   
+}
+
+li:hover button{
+
+color: darkgoldenrod;
+
+}
+
+header{
+
+    background-color: black;
+    
+    
+
+}
+ul{
+
+    background-color: black;
+}
+
+
