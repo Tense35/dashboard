@@ -53,15 +53,218 @@
 
     <!-- Fin catálogo -->
 
-    <!-- Formulario de contacto -->
+ <!-- Producto destacado -->
 
-    <div class="dn-center mt-5">
-        <app-contacto-inicio></app-contacto-inicio>
+ <div class="container mt-5">
+    <div class="row">
+        <div class="main_feature">
+
+            <div class="col-md-6 m-top-20">
+
+                <!-- Head Title -->
+                <div class="head_title">
+                    <h2 class="color">Producto Destacado</h2>
+                    <!--  <h5><em>Pouseidon brings the waves to somewhere so far,
+                            with beautiful & elegant</em></h5> -->
+                    <div class="separator_left"></div>
+                </div>
+                <!-- End off Head Title -->
+
+                <div class="feature_content wow fadeIn m-top-40">
+
+                    <h3 class="text-uppercase color">CONJUNTO ENCANTO</h3>
+                    <br>
+                    <p> Conjunto niño en tela burda y algodón con variedad de colores </p>
+
+                    <div *ngIf="mostrarTexto">
+                        <p>
+                          <b>REF:</b> 390
+                        </p>
+
+                        <p>
+                          <b>TALLAS:</b> 0,1,2,4
+                        </p>
+                        <p>
+                            Chaleco en tela burda mameluco y sudadera licra algodón 
+                        </p>
+                        <br>
+                    </div>
+                    <a (click)="verTexto()" *ngIf="!mostrarTexto; else vermenos"> <u>Leer Mas...</u> </a>
+                    <ng-template #vermenos>
+                        <a (click)="verMenos()"> <u>Ver Menos...</u> </a>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature_photo wow fadeIn sm-m-top-40">
+                    <div class=""></div>
+                    <div class="feature_img">
+                        <img width="250px" height="450px" src="../../../assets/images/pd.jpg" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!--End off row-->
+</div>
 
-    <!-- Fin formulario de contacto -->
+<!-- Fin producto destacado-->
+    
+   <!-- Galeria -->
+
+   <div class="container">
+    <div class="row">
+        <div class="main_models text-center">
+            <div class="col-md-12">
+                <div class="head_title text-left sm-text-center wow fadeInDown">
+                    <h2>Galeria</h2>
+                    <h5><em>nuestros Modelos !</em></h5>
+                    <div class="separator_left"></div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/conjuntonias/2A.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase"> Conjunto niña </a>
+                            <h5>$ 24.900</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/Variedad/3.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase">Pantalon camuflado</a>
+                            <h5>$ 22.000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/pijamanios/5.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase"> Pijama niño </a>
+                            <h5>$ 18.000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End off col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/Vestidos/2.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase">Vestido</a>
+                            <h5>$ 34.000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+            
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/conjuntosnios/6O.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase"> Conjunto niño </a>
+                            <h5>$ 38.000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/Variedad/5.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase"> Camisetas </a>
+                            <h5>$ 25.000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+
+            <div class="col-md-3 col-sm-6">
+                <div class="model_item m-top-30">
+                    <div class="model_img">
+                        <img src="../../../assets/images/pijamanias/2.jpg" alt="" style="width: 262px; height: 262px;" />
+                        <div class="model_caption">
+                            <a class="text-uppercase"> Pijama niña </a>
+                            <h5>$ 18.000</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- End off col-md-3 -->
+
+            <div *ngIf="mostrar">
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="model_item m-top-30">
+                        <div class="model_img">
+                            <img src="../../../assets/images/Vestidos/3.jpg" alt="" style="width: 262px; height: 262px;" />
+                            <div class="model_caption">
+                                <a class="text-uppercase"> Vestido </a>
+                                <h5>$ 24.900</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- End off col-md-3 -->
+                 <div *ngIf="mostrar">
+
+                    <div class="col-md-3 col-sm-6">
+                        <div class="model_item m-top-30">
+                            <div class="model_img">
+                                <img src="../../../assets/images/conjuntosninas/5A.jpg" alt="" style="width: 262px; height: 262px;" />
+                                <div class="model_caption">
+                                    <a class="text-uppercase"> Conjunto niña</a>
+                                    <h5>$ 31.900 </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- End off col-md-3 -->
+                     <div *ngIf="mostrar">
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="model_item m-top-30">
+                                <div class="model_img">
+                                    <img src="../../../assets/images/conjuntosninos/10O.jpg" alt="" style="width: 262px; height: 262px;" />
+                                    <div class="model_caption">
+                                        <a class="text-uppercase"> Conjunto niño </a>
+                                        <h5>$ 19.900</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- End off col-md-3 -->
+
+
+<!-- Fin galeria -->
 
 </div>
+
+
+
 
 
 
