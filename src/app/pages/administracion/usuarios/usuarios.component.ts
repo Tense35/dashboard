@@ -8,6 +8,8 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../models/Usuario.model';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FileUploadService } from '../../../services/file-upload.service';
+import { UsuarioData } from '../../../interfaces/usuarios.interface';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -28,11 +30,11 @@ export class UsuariosComponent implements OnInit
 
   // Imagen
   //@ts-ignore
-  public archivo: File;
+  public archivo: any;
   public imgTemp: any = null;
   public usuarioSeleccionado: any;
 
-  constructor( private fb: FormBuilder, private usuarioService: UsuarioService, private searchService: SearchService, private fileUploadService: FileUploadService  ) 
+  constructor( private fb: FormBuilder, private usuarioService: UsuarioService, private searchService: SearchService, private authService: AuthService, private fileUploadService: FileUploadService ) 
   { 
 
   }
@@ -43,11 +45,14 @@ export class UsuariosComponent implements OnInit
 
     this.usuarioForm = this.fb.group
     ({
+      imagen: ['' ],
+      email: ['', [ Validators.required ] ],
       nombre: ['', [ Validators.required ] ],
       estado: ['', [ Validators.required ] ],
-      img: ['', [ Validators.required ] ],
     });
+
   }
+
 
   obtenerUsuarios()
   {
@@ -165,52 +170,115 @@ export class UsuariosComponent implements OnInit
     })
   }
 
-  modificar( usuario: any )
+  cargarUsuarioSeleccionado( usuario: UsuarioData )
   {
     this.usuarioSeleccionado = usuario;
-    console.log(this.usuarioSeleccionado);
+
+    // Coloca la imagen existente en imgTemp para que se previsualice en el modal
     this.imgTemp = this.usuarioSeleccionado.imagen;
-    console.log(this.imgTemp);
-    Swal.fire
-    ({
-      title: 'Modificar usuario',
-      html:
-        // Nombre
-        `<div class="card-body card-imagen"><h4 class="card-title">Avatar</h4><div class="text-center"><img src="${this.imgTemp}" class="img-avatar"></div><input type="file" (change)="cambiarImagen($event)" class="mt-4"><br><br></div>`
-        +
-        // Nombre
-        '<div class="form-group"><h5>Nombre</h5><div class="controls"><input type="text" name="text" class="form-control" required="" data-validation-required-message="This field is required" aria-invalid="false"> <div class="help-block"></div></div></div>'
-        +
-        // Estado
-        '<div class="form-group"><h5>Estado</h5><div class="controls"><select name="select" id="select" required="" class="form-control"><option value="">Selecciona un estado</option><option value="true">Activo</option><option value="false">Inactivo</option></select><div class="help-block"></div></div></div>' 
-        + 
-        '<input controlName="img" class="swal2-input">',
-      focusConfirm: false,
+
+    // Inicializa los inputs del modal con la información actual
+    this.usuarioForm.controls.email.setValue(this.usuarioSeleccionado.email);
+    this.usuarioForm.controls.nombre.setValue(this.usuarioSeleccionado.nombre);
+    this.usuarioForm.controls.estado.setValue(this.usuarioSeleccionado.estado);
+  }
+
+  modificar(  )
+  {
+    let i = 0;
+    let imagen = '';
+
+    const usuario = this.usuarioForm.value;
+
+    // Validar que el formulario sea válido
+    if ( this.usuarioForm.invalid )
+    {
+      this.usuarioForm.markAllAsTouched();
+      return;
+    }
+
+    // Modal de Swal Fire
+    Swal.fire({
+      title: 'Modificación de usuario usuario',
+      text: `¿Estás seguro que quieres editar la cuenta del usuario ${ this.usuarioSeleccionado.email }?`,
+      icon: 'warning',
       showCancelButton: true,
-      cancelButtonText: 'Cancelar edición',
-      cancelButtonColor: '#d33',
       confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Editar usuario',
-      
-      preConfirm: () => 
-      {
-        return[
-          this.usuarioForm.get('nombre').value,
-          this.usuarioForm.get('estado').value,
-        ]
-      }
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, quiero modificarlo',
+      cancelButtonText: 'Descartar modificación'
     }).then((result) => 
     {
       if (result.isConfirmed) 
       {
-        this.actualizarImagen();
+        Swal.fire ( 'Sistema', `El usuario ${ this.usuarioSeleccionado.email } ha sido modificado exitosamente.`, 'success' );
+        
+        // Si no se cambió la foto, no la actualizaremos
+        if (!this.archivo)
+        {
+          delete usuario.imagen;
+        }
+
+        // En caso de haber modificado la imagen, se actualiza la información, de lo contrario se utiliza la que ya estaba
+        if ( !usuario.imagen )
+        {
+          this.fileUploadService.actualizarImagen( this.archivo, 'usuarios', this.usuarioSeleccionado.email ).then( img => 
+          {
+            imagen = img.data.imagen
+
+            // Actualizar la data local de los usuarios
+            this.usuariosTemp[i].imagen = imagen;
+
+            // En caso de que me esté modificando a mi mismo usuario (Se actualiza la información que se ve en el resto del dashboard)
+            if ( this.usuarioSeleccionado.email === this.authService.usuario.email )
+            {
+              this.authService.usuario.nombre = usuario.nombre;
+
+              // En caso de estar actualizando también la foto
+              if ( !usuario.imagen )
+              {
+                this.authService.usuario.imagen = imagen;
+              }
+            }
+
+          }).catch( error => 
+          {
+            console.log(error);
+            Swal.fire('Error al subir la imagen', 'Ha ocurrido un error' + error.msg, 'error');
+          });
+        }
+
+        this.usuarioService.actualizarPerfil(usuario, this.usuarioSeleccionado.email)
+          .subscribe( (apiResp: any) => 
+          {
+            // Obtener el índice donde se aloja la data local del usuario seleccionado
+            i = this.usuariosTemp.map( data => { return data.email === usuario.email; }).indexOf(true);
+            // Actualizar la información en el array donde está la data local
+            this.usuariosTemp[i].estado = usuario.estado;
+            this.usuariosTemp[i].nombre = usuario.nombre;
+
+          }, error => 
+          {
+            console.log(error);
+            Swal.fire ( 'Sistema', `El usuario ${ this.usuarioSeleccionado.email } no se logró editar`, 'error' );
+            return;
+          }
+          );
+
+        // Actualizar el otro array
+        this.usuarios = this.usuariosTemp;
       }
+
+      // Elimina el archivo cargado dado que no se utilizará
+      this.archivo = null;
+
     })
-    .catch( error => 
-    {
-      console.log(error);
-      Swal.fire('Error en la actualización de datos', 'Ha ocurrido un error' + error.msg, 'error');
-    });
+  }
+
+  // Validar forms
+  validar( campo: string )
+  {
+    return this.usuarioForm.controls[campo].errors && this.usuarioForm.controls[campo].touched;
   }
 
   // Imagen
@@ -240,22 +308,5 @@ export class UsuariosComponent implements OnInit
       }
     }
   }
-
-  actualizarImagen()
-  {
-    this.fileUploadService.actualizarImagen( this.archivo, 'usuarios', this.usuarioSeleccionado.email ).then( img => 
-    {
-      const i = this.usuariosTemp.map( data => { return data.email === this.usuarioSeleccionado.email; }).indexOf(true);
-      this.usuariosTemp[i].estado = true;
-      this.usuarios[i].imagen = this.usuarioSeleccionado.imagen;
-      
-    }).catch( error => 
-    {
-      console.log(error);
-      Swal.fire('Error en la actualización de datos', 'Ha ocurrido un error' + error.msg, 'error');
-    });
-  }
-
-
 
 }

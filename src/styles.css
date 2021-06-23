@@ -35,6 +35,14 @@
     text-align: left !important;
 }
 
+/* Modal - Edición */
+
+.img-edicion
+{
+    width: 200px;
+    height: 200px;
+}
+
 /* Animaciones */
 
 .fast
