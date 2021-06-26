@@ -22,6 +22,7 @@ export class SidebarService
       submenu: 
       [
         { titulo: 'Usuarios', url: 'usuarios' },
+        { titulo: 'Productos', url: 'productos' },
       ]
     }
   ]

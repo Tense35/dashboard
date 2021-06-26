@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { ObtenerUsuario, UsuarioData } from '../interfaces/usuarios.interface';
 import { Usuario } from '../models/Usuario.model';
-import { pipe } from 'rxjs';
 
 const base_url = environment.base_url;
 
@@ -22,6 +21,12 @@ export class UsuarioService
 
   constructor( private http: HttpClient, private authService: AuthService ) { 
     this.token = authService.token;
+  }
+
+  crearUsuario( data: UsuarioData)
+  {
+    delete data.imagen;
+    return this.http.post(`${ base_url }/usuarios`, data);
   }
 
   actualizarPerfil( data: UsuarioData, email: string )

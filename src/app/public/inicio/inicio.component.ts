@@ -29,7 +29,7 @@ export class InicioComponent implements OnInit
     this.productosService.obtenerProductos(categoria, estado)
       .subscribe( resp => 
       {
-        this.productos = resp;
+        this.productos = resp.data;
       }); 
   }
 

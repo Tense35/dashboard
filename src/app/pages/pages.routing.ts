@@ -10,6 +10,7 @@ import { UsuariosComponent } from './administracion/usuarios/usuarios.component'
 
 // Administración
 import { PerfilComponent } from './perfil/perfil.component';
+import { ProductosComponent } from './administracion/productos/productos.component';
 
 
 const routes: Routes = 
@@ -24,6 +25,7 @@ const routes: Routes =
           { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes' } },
           { path: 'perfil', component: PerfilComponent, data: { titulo: 'Mi perfil' } },
           { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' } },
+          { path: 'productos', component: ProductosComponent, data: { titulo: 'Productos' } },
         ]
     },
 ];

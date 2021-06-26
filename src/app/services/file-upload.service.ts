@@ -11,7 +11,7 @@ export class FileUploadService
 
   constructor() { }
 
-  async actualizarImagen( archivo: File, tipo: 'usuarios'|'productos', id: string )
+  async actualizarImagen( archivo: File, tipo: 'usuarios'|'productos', id: string | number)
   {
     try 
     {
@@ -22,7 +22,7 @@ export class FileUploadService
       const resp = await fetch( url, 
       { 
         method: 'PUT',
-        body: formData 
+        body: formData,  
       });
 
       const data = await resp.json();

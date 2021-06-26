@@ -28,8 +28,18 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Total de usuarios ({{ totalUsuarios }})</h4>
-                <h6 class="card-subtitle">Usuarios registrados en la base de datos</h6>
+                <div class="row">
+                    <div class="col-md-12 d-flex flex-row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Total de usuarios ({{ totalUsuarios }})</h4>
+                            <h6 class="card-subtitle">Usuarios registrados en la base de datos</h6>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end align-items-center">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#create-modal" data-original-title="Crear"><i class="mdi mdi-plus"></i> Insertar nuevo usuario</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -47,7 +57,7 @@
                                     <img class="avatar" [src]="usuario.imagen" [alt]="usuario.nombre">
                                 </td>
                                 <td>{{ usuario.email }}</td>
-                                <td>{{ usuario.nombre }}</td>
+                                <td>{{ usuario.nombre | titlecase }}</td>
                                 <td>
                                     <label *ngIf="usuario.estado" class="label label-primary">Activo</label>
                                     <label *ngIf="!usuario.estado" class="label label-danger">Inactivo</label>
@@ -76,6 +86,64 @@
 
 <!-- Modal -->
 
+<!-- Creación -->
+
+<div  id="create-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModal" style="display: none; overflow-y: auto;">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="z-index: -10;">
+            <div class="modal-header">
+                <h4 class="modal-title">Crear usuario</h4>
+                <button type="button" class="close cursor" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="usuarioCreateForm">
+                    <div class="card-body">
+                        <h4 class="text-center">Imagen del usuario</h4>
+                        <div class="text-center">
+                            <img [src]="imgTemp" class="img-edicion">
+                        </div>
+                        <input type="file" (change)="cambiarImagen($event)" class="mt-4"><br><br>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <input type="text" formControlName="email" class="form-control">
+                        <small *ngIf="validar('email', 'usuarioCreateForm')" class="form-control-feedback text-danger"> El email proporcionado no es válido </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Nombre</label>
+                        <input type="text" formControlName="nombre" class="form-control">
+                        <small *ngIf="validar('nombre', 'usuarioCreateForm')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Contraseña</label>
+                        <input type="password" formControlName="password" class="form-control">
+                        <small *ngIf="validar('password2', 'usuarioCreateForm')" class="form-control-feedback text-danger"> Este campo es obligatorio </small><br>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Confirmar contraseña</label>
+                        <input type="password" formControlName="password2" class="form-control">
+                        <small *ngIf="validar('password2', 'usuarioCreateForm')" class="form-control-feedback text-danger"> Este campo es obligatorio <br></small> 
+                        <small *ngIf="validarPass() === 1" class="form-control-feedback text-danger"> Las contraseñas deben tener mínimamente 5 caracteres <br></small>
+                        <small *ngIf="validarPass() === 2" class="form-control-feedback text-danger"> Las contraseñas no coinciden <br></small>
+                    </div>
+
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" (click)="crear()">Crear usuario</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edición -->
+
 <div  id="responsive-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; overflow-y: auto;">
     <div class="modal-dialog" >
         <div class="modal-content" style="z-index: -10;">
@@ -101,7 +169,7 @@
                     <div class="form-group">
                         <label class="control-label">Nombre</label>
                         <input type="text" formControlName="nombre" class="form-control">
-                        <small *ngIf="validar('nombre')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
+                        <small *ngIf="validar('nombre', 'usuarioForm')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
                     </div>
 
                     <div class="form-group">
@@ -110,7 +178,7 @@
                             <option value="true">Activo</option>
                             <option value="false">Inactivo</option>
                         </select>
-                        <small *ngIf="validar('estado')" class="form-control-feedback text-danger"> Debe seleccionar un estado </small>
+                        <small *ngIf="validar('estado', 'usuarioForm')" class="form-control-feedback text-danger"> Debe seleccionar un estado </small>
                     </div>
 
                     

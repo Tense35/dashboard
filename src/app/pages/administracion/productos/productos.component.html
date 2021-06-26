@@ -1,0 +1,268 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <input class="form-control" type="text" placeholder="Buscar producto..." (keyup)="buscar( txtBuscar.value )"  #txtBuscar/>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading  -->
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando..</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere..</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla -->
+
+<div class="row animated FadeIn fast" *ngIf="!loading">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 d-flex flex-row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Total de productos ({{ totalProductos }})</h4>
+                            <h6 class="card-subtitle">Productos registrados en la base de datos</h6>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end align-items-center">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#create-modal" data-original-title="Crear"><i class="mdi mdi-plus"></i> Insertar nuevo producto</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="w100">Producto</th>
+                                <th>Id</th>
+                                <th><i class="mdi mdi-pin"></i></th>
+                                <th>Categoria</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th class="w100">Estado</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="animated fadeIn fast" *ngFor="let producto of productos">
+                                <td class="text-center">
+                                    <img class="avatar" [src]="producto.imagen" [alt]="producto.nombre">
+                                </td>
+                                <td>{{ producto.id_producto }}</td>
+                                <td>
+                                    <i class="mdi mdi-pin"
+                                    [ngClass]="{'text-danger': producto.destacar === false,'text-info': producto.destacar === true}">
+                                    </i>
+                                </td>
+                                <td>{{ nombreCategoria(producto.id_categoria) | titlecase }}</td>
+                                <td>{{ producto.nombre }}</td>
+                                <td>{{ producto.precio | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                                <td>{{ producto.stock }}</td>
+                                <td>
+                                    <label *ngIf="producto.estado" class="label label-primary">Activo</label>
+                                    <label *ngIf="!producto.estado" class="label label-danger">Inactivo</label>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a class="cursor" (click)="cargarProductoSeleccionado(producto)" data-toggle="modal" data-target="#responsive-modal" data-original-title="Editar"> <i class="fa fa-pencil m-r-10"></i> </a>
+                                    <a *ngIf="producto.estado" (click)="eliminar( producto.id_producto )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a *ngIf="!producto.estado" (click)="activar( producto.id_producto, producto.id_categoria )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div *ngIf="txtBuscar.value.length === 0" >
+                    <button (click)="cambiarPagina(-10)" class="btn btn-secundary">Anteriores</button>
+                    &nbsp;
+                    <button (click)="cambiarPagina(10)" class="btn btn-secundary">Siguientes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<!-- Creación -->
+
+<div  id="create-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModal" style="display: none; overflow-y: auto;">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="z-index: -10;">
+            <div class="modal-header">
+                <h4 class="modal-title">Crear producto</h4>
+                <button type="button" class="close cursor" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productoCreateForm">
+                    <div class="card-body">
+                        <h4 class="text-center">Imagen del producto</h4>
+                        <div class="text-center">
+                            <img [src]="imgTemp" class="img-edicion">
+                        </div>
+                        <input type="file" (change)="cambiarImagen($event)" class="mt-4"><br><br>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Nombre del producto</label>
+                        <input type="text" formControlName="nombre" class="form-control">
+                        <small *ngIf="validar('nombre', 'productoCreateForm')" class="form-control-feedback text-danger"> El nombre es obligatorio. </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Precio del producto</label>
+                        <input type="number" formControlName="precio" class="form-control" min="0">
+                        <small *ngIf="validar('precio', 'productoCreateForm')" class="form-control-feedback text-danger"> El precio es obligatorio. </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Descripción del producto</label>
+                        <textarea formControlName="descripcion" class="form-control"></textarea>
+                        <small *ngIf="validar('descripcion', 'productoCreateForm')" class="form-control-feedback text-danger"> La descripción del producto es obligatoria. </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Categoría</label>
+                        <select class="form-control custom-select" formControlName="id_categoria" data-placeholder="Selecciona una categoría" tabindex="1">
+                            <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.nombre | titlecase }}</option>
+                        </select>
+                        <small *ngIf="validar('id_categoria', 'productoCreateForm')" class="form-control-feedback text-danger"> Debe seleccionar una categoría </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Color (Debe ser hexadecimal y seprarse con comas sin espacios)</label>
+                        <input type="text" formControlName="color" class="form-control" placeholder="Ejem: #000000,#FFFFFF">
+                        <small *ngIf="validar('color', 'productoCreateForm')" class="form-control-feedback text-danger"> Debe ingresar mínimamente un color </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Tallas</label>
+                        <input type="text" formControlName="talla" class="form-control">
+                        <small *ngIf="validar('talla', 'productoCreateForm')" class="form-control-feedback text-danger"> Debe ingresar mínimamente una talla </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Género</label>
+                        <select class="form-control custom-select" formControlName="genero" data-placeholder="Seleccione un género" tabindex="1">
+                            <option value="m">Masculino</option>
+                            <option value="f">Femenino</option>
+                            <option value="x">Unisex</option>
+                        </select>
+                        <small *ngIf="validar('genero', 'productoCreateForm')" class="form-control-feedback text-danger"> Debe seleccionar un género </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Porcentaje de iva</label>
+                        <input type="number" formControlName="iva" class="form-control" min="0" value="0">
+                        <small *ngIf="validar('iva', 'productoCreateForm')" class="form-control-feedback text-danger"> El porcentaje debe ser 0 ó mayor que 0 y menor o igual a 100</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">¿Destacar este producto?</label>
+                        <select class="form-control custom-select" formControlName="destacar" data-placeholder="Seleccione una opción" tabindex="1">
+                            <option selecte value="false">No destacar</option>
+                            <option value="true">Destacar</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Porcentaje de descuento del producto</label>
+                        <input type="number" formControlName="descuento" class="form-control" min="0" max="100" value="0">
+                        <small *ngIf="validar('descuento', 'productoCreateForm')" class="form-control-feedback text-danger"> El porcentaje debe ser 0 ó mayor que 0 y menor o igual a 100 </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Stock del producto</label>
+                        <input type="number" formControlName="stock" class="form-control" min="0" max="100" value="0">
+                        <small *ngIf="validar('stock', 'productoCreateForm')" class="form-control-feedback text-danger"> El stock debe ser mayor o igual a 0</small>
+                    </div>
+
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" (click)="crear()">Crear producto</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edición -->
+
+<div  id="responsive-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; overflow-y: auto;">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="z-index: -10;">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar producto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="productoForm">
+                    <div class="card-body">
+                        <h4 class="text-center">Imagen del producto</h4>
+                        <div class="text-center">
+                            <img [src]="imgTemp" class="img-edicion">
+                        </div>
+                        <input type="file" (change)="cambiarImagen($event)" class="mt-4"><br><br>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">id</label>
+                        <input readonly type="text" formControlName="id_producto" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Categoría</label>
+                        <select class="form-control custom-select" formControlName="id_categoria" data-placeholder="Selecciona una categoría" tabindex="1">
+                            <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.nombre | titlecase }}</option>
+                        </select>
+                        <small *ngIf="validar('id_categoria')" class="form-control-feedback text-danger"> Debe seleccionar una categoría </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Nombre</label>
+                        <input type="text" formControlName="nombre" class="form-control">
+                        <small *ngIf="validar('nombre')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Color</label>
+                        <input type="text" formControlName="color" class="form-control">
+                        <small *ngIf="validar('nombre')" class="form-control-feedback text-danger"> El color no es válido </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Estado</label>
+                        <select class="form-control custom-select" formControlName="estado" data-placeholder="Selecciona un estado" tabindex="1">
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                        <small *ngIf="validar('estado')" class="form-control-feedback text-danger"> Debe seleccionar un estado </small>
+                    </div>
+
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect waves-light" (click)="modificar()">Guardar los cambios</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
