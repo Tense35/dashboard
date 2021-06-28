@@ -63,9 +63,9 @@
                                     <label *ngIf="!usuario.estado" class="label label-danger">Inactivo</label>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a class="cursor" (click)="cargarUsuarioSeleccionado(usuario)" data-toggle="modal" data-target="#responsive-modal" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
-                                    <a *ngIf="usuario.estado" (click)="eliminar( usuario.email )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
-                                    <a *ngIf="!usuario.estado" (click)="activar( usuario.email )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
+                                    <a title="Editar" class="cursor" (click)="cargarUsuarioSeleccionado(usuario)" data-toggle="modal" data-target="#responsive-modal" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a title="Desactivar" *ngIf="usuario.estado" (click)="eliminar( usuario.email )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a title="Activar" *ngIf="!usuario.estado" (click)="activar( usuario.email )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
 
                                 </td>
                             </tr>

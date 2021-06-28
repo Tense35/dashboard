@@ -38,7 +38,7 @@ export class InicioComponent implements OnInit
     this.categoriasService.obtenerCategorias()
       .subscribe( resp => 
       {
-        this.categorias = resp;
+        this.categorias = resp.data;
       }); 
   }
 

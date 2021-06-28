@@ -112,9 +112,9 @@ export class ProductosComponent implements OnInit
   // Obtener todas las categorías
   obtenerCategorias()
   {
-    this.categoriaService.obtenerCategorias().subscribe( data => 
+    this.categoriaService.obtenerCategorias().subscribe( resp => 
     {
-      this.categorias = data;
+      this.categorias = resp.data;
     });
     
   }
@@ -407,6 +407,10 @@ export class ProductosComponent implements OnInit
             // Obtener el índice donde se aloja la data local del producto seleccionado
             i = this.productosTemp.map( data => { return data.id_producto === producto.id_producto; }).indexOf(true);
 
+            // Paseo a Boolean
+            const destacar = (producto.destacar  === 'true' || producto.destacar === true )? true : false;
+            const estado = (producto.estado  === 'true' || producto.estado === true )? true : false;
+
             // Actualizar la información en el array donde está la data local
             this.productosTemp[i].id_producto  = producto.id_producto;
             this.productosTemp[i].id_categoria = producto.id_categoria;
@@ -417,11 +421,10 @@ export class ProductosComponent implements OnInit
             this.productosTemp[i].precio       = producto.precio;
             this.productosTemp[i].descripcion  = producto.descripcion;
             this.productosTemp[i].iva          = producto.iva;
-            this.productosTemp[i].destacar     = producto.destacar;
+            this.productosTemp[i].destacar     = destacar;
             this.productosTemp[i].descuento    = producto.descuento;
             this.productosTemp[i].stock        = producto.stock;
-            const estado = (producto.estado  === 'true' )? true : false;
-            this.productosTemp[i].estado       = estado;
+            this.productosTemp[i].estado       = producto.estado;
 
           }, error => 
           {
@@ -440,7 +443,6 @@ export class ProductosComponent implements OnInit
 
     // Actualizar el otro array
     this.productos = this.productosTemp;
-    console.log(this.productos[i]);
   }
 
   // Validar forms
@@ -483,17 +485,22 @@ export class ProductosComponent implements OnInit
     {
       const cat = this.categorias.filter( resp => 
       {
-        return resp.id_categoria === id_categoria
+        if (id_categoria === this.productoSeleccionado?.id_categoria)
+        {
+          return resp.id_categoria === this.productoSeleccionado.id_categoria;
+        }
+
+        return resp.id_categoria === id_categoria;
       });
     
       return cat[0].nombre;
     } 
     catch (error) 
     {
+      console.log('Error');
       return 'Variedad';
     }
 
-    
   }
   
 }

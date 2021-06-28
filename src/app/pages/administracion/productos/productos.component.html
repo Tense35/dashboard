@@ -75,9 +75,9 @@
                                     <label *ngIf="!producto.estado" class="label label-danger">Inactivo</label>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a class="cursor" (click)="cargarProductoSeleccionado(producto)" data-toggle="modal" data-target="#responsive-modal" data-original-title="Editar"> <i class="fa fa-pencil m-r-10"></i> </a>
-                                    <a *ngIf="producto.estado" (click)="eliminar( producto.id_producto )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
-                                    <a *ngIf="!producto.estado" (click)="activar( producto.id_producto, producto.id_categoria )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
+                                    <a title="Editar" class="cursor" (click)="cargarProductoSeleccionado(producto)" data-toggle="modal" data-target="#responsive-modal" data-original-title="Editar"> <i class="fa fa-pencil m-r-10"></i> </a>
+                                    <a title="Desactivar" *ngIf="producto.estado" (click)="eliminar( producto.id_producto )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a title="Activar" *ngIf="!producto.estado" (click)="activar( producto.id_producto, producto.id_categoria )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
 
                                 </td>
                             </tr>
@@ -227,32 +227,86 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label">Nombre del producto</label>
+                        <input type="text" formControlName="nombre" class="form-control">
+                        <small *ngIf="validar('nombre', 'productoForm')" class="form-control-feedback text-danger"> El nombre es obligatorio. </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Precio del producto</label>
+                        <input type="number" formControlName="precio" class="form-control" min="0">
+                        <small *ngIf="validar('precio', 'productoForm')" class="form-control-feedback text-danger"> El precio es obligatorio. </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Descripción del producto</label>
+                        <textarea formControlName="descripcion" class="form-control"></textarea>
+                        <small *ngIf="validar('descripcion', 'productoForm')" class="form-control-feedback text-danger"> La descripción del producto es obligatoria. </small> 
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label">Categoría</label>
                         <select class="form-control custom-select" formControlName="id_categoria" data-placeholder="Selecciona una categoría" tabindex="1">
                             <option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">{{ categoria.nombre | titlecase }}</option>
                         </select>
-                        <small *ngIf="validar('id_categoria')" class="form-control-feedback text-danger"> Debe seleccionar una categoría </small>
+                        <small *ngIf="validar('id_categoria', 'productoForm')" class="form-control-feedback text-danger"> Debe seleccionar una categoría </small>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Nombre</label>
-                        <input type="text" formControlName="nombre" class="form-control">
-                        <small *ngIf="validar('nombre')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
+                        <label class="control-label">Color (Debe ser hexadecimal y seprarse con comas sin espacios)</label>
+                        <input type="text" formControlName="color" class="form-control" placeholder="Ejem: #000000,#FFFFFF">
+                        <small *ngIf="validar('color', 'productoForm')" class="form-control-feedback text-danger"> Debe ingresar mínimamente un color </small> 
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Color</label>
-                        <input type="text" formControlName="color" class="form-control">
-                        <small *ngIf="validar('nombre')" class="form-control-feedback text-danger"> El color no es válido </small> 
+                        <label class="control-label">Tallas</label>
+                        <input type="text" formControlName="talla" class="form-control">
+                        <small *ngIf="validar('talla', 'productoForm')" class="form-control-feedback text-danger"> Debe ingresar mínimamente una talla </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Género</label>
+                        <select class="form-control custom-select" formControlName="genero" data-placeholder="Seleccione un género" tabindex="1">
+                            <option value="m">Masculino</option>
+                            <option value="f">Femenino</option>
+                            <option value="x">Unisex</option>
+                        </select>
+                        <small *ngIf="validar('genero', 'productoForm')" class="form-control-feedback text-danger"> Debe seleccionar un género </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Porcentaje de iva</label>
+                        <input type="number" formControlName="iva" class="form-control" min="0" value="0">
+                        <small *ngIf="validar('iva', 'productoForm')" class="form-control-feedback text-danger"> El porcentaje debe ser 0 ó mayor que 0 y menor o igual a 100</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">¿Destacar este producto?</label>
+                        <select class="form-control custom-select" formControlName="destacar" data-placeholder="Seleccione una opción" tabindex="1">
+                            <option selecte value="false">No destacar</option>
+                            <option value="true">Destacar</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Porcentaje de descuento del producto</label>
+                        <input type="number" formControlName="descuento" class="form-control" min="0" max="100" value="0">
+                        <small *ngIf="validar('descuento', 'productoForm')" class="form-control-feedback text-danger"> El porcentaje debe ser 0 ó mayor que 0 y menor o igual a 100 </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Stock del producto</label>
+                        <input type="number" formControlName="stock" class="form-control" min="0" max="100" value="0">
+                        <small *ngIf="validar('stock', 'productoForm')" class="form-control-feedback text-danger"> El stock debe ser mayor o igual a 0</small>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">Estado</label>
-                        <select class="form-control custom-select" formControlName="estado" data-placeholder="Selecciona un estado" tabindex="1">
+                        <select class="form-control custom-select" formControlName="estado" data-placeholder="Seleccione un género" tabindex="1">
                             <option value="true">Activo</option>
                             <option value="false">Inactivo</option>
                         </select>
-                        <small *ngIf="validar('estado')" class="form-control-feedback text-danger"> Debe seleccionar un estado </small>
+                        <small *ngIf="validar('estado', 'productoForm')" class="form-control-feedback text-danger"> Debe seleccionar un estado </small>
                     </div>
 
                     

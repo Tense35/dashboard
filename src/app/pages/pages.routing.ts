@@ -4,13 +4,14 @@ import { NgModule } from '@angular/core';
 // Propios
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { AuthGuard } from '../guards/auth.guard';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
-import { UsuariosComponent } from './administracion/usuarios/usuarios.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 // Administración
-import { PerfilComponent } from './perfil/perfil.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CategoriasComponent } from './administracion/categorias/categorias.component';
 import { ProductosComponent } from './administracion/productos/productos.component';
+import { UsuariosComponent } from './administracion/usuarios/usuarios.component';
 
 
 const routes: Routes = 
@@ -21,11 +22,12 @@ const routes: Routes =
         canActivate: [ AuthGuard ],
         children: 
         [
-          { path: 'main', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+          { path: '', component: DashboardComponent, data: { titulo: 'Dashboard' } },
           { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes' } },
+          { path: 'categorias', component: CategoriasComponent, data: { titulo: 'Categorías' } },
           { path: 'perfil', component: PerfilComponent, data: { titulo: 'Mi perfil' } },
-          { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' } },
           { path: 'productos', component: ProductosComponent, data: { titulo: 'Productos' } },
+          { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' } },
         ]
     },
 ];

@@ -19,7 +19,7 @@ export class SearchService
     return localStorage.getItem('token') || '';
   }
 
-  buscar( tabla: 'usuarios'|'productos', campo: string = 'email', termino: string )
+  buscar( tabla: 'usuarios'|'productos'|'categorias', campo: string = 'email', termino: string )
   {
     return this.http.get<any[]>( `${ base_url }/search/${ tabla }/${ campo }/${ termino }` )
       .pipe 
