@@ -1,9 +1,9 @@
 
 img{
 
-width: 15%;
-height: max-content;
-padding-top: 20px;
+width: 170px;
+height:87px;
+padding-top: 10px;
 padding-left: 70px;
 
 }
@@ -13,20 +13,30 @@ padding-left: 70px;
 
 li{
 
-float: left;
+float: right;
 list-style: none;
-padding: 19px;
+padding: 10px;
+text-orientation: upright;
+
 }
 
 nav{
 
 float: right;
-margin-top: 50px;
-margin-right: 20px;
-background-color: black;
+margin-top: 0;
+margin-right: 0;
+background-color: black !important;
+}
 
+.fa-shopping-bag{
+
+color: aliceblue;
+font-size: 27px;
 
 }
+
+
+
 
 button{
 
@@ -36,7 +46,7 @@ button{
     color: aliceblue;
     background-color: black;
     outline: none;
-    font-size: 150% ;
+    font-size: 100% ;
     border: black;
    
 }
@@ -59,4 +69,33 @@ ul{
     background-color: black;
 }
 
+.container{
+
+float: right;
+background-color: black;
+}
+
+.navbar navbar-expand-md navbar-dark fixed-top bg-dark{
+
+float: right;
+padding: 0px 0px !important;
+
+}
+
+a {
+background-color: black;
+color: blanchedalmond;
+}
+
+div{
+
+background-color: black;
+
+}
+
+th{
+
+    color: blanchedalmond;
+
+}
 
