@@ -1,13 +1,101 @@
-.dn-container
-{
-    justify-content: center;
-    align-items: center;
-    background-color: #1A1A1A;
-    border: 1px #171A19 solid;
-    min-height: 65px;
+
+img{
+
+width: 170px;
+height:87px;
+padding-top: 10px;
+padding-left: 70px;
+
 }
 
-p-menubar
-{
-    width: 100%;
+
+
+
+li{
+
+float: right;
+list-style: none;
+padding: 10px;
+text-orientation: upright;
+
 }
+
+nav{
+
+float: right;
+margin-top: 0;
+margin-right: 0;
+background-color: black !important;
+}
+
+.fa-shopping-bag{
+
+color: aliceblue;
+font-size: 27px;
+
+}
+
+
+
+
+button{
+
+    font-family:"Arial-Rounded", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;;
+    font-weight: bold;
+    text-decoration: none;
+    color: aliceblue;
+    background-color: black;
+    outline: none;
+    font-size: 100% ;
+    border: black;
+   
+}
+
+li:hover button{
+
+color: darkgoldenrod;
+
+}
+
+header{
+
+    background-color: black;
+    
+    
+
+}
+ul{
+
+    background-color: black;
+}
+
+.container{
+
+float: right;
+background-color: black;
+}
+
+.navbar navbar-expand-md navbar-dark fixed-top bg-dark{
+
+float: right;
+padding: 0px 0px !important;
+
+}
+
+a {
+background-color: black;
+color: blanchedalmond;
+}
+
+div{
+
+background-color: black;
+
+}
+
+th{
+
+    color: blanchedalmond;
+
+}
+
