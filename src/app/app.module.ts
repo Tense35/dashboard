@@ -9,12 +9,14 @@ import { AuthModule } from './auth/auth.module';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PagesModule } from './pages/pages.module';
 import { PublicModule } from './public/public.module';
+import { CardPipe } from './pipes/card.pipe';
+import { CardEmptyPipe } from './pipes/card-empty.pipe';
 
 @NgModule({
   declarations: 
   [
     AppComponent,
-    NopagefoundComponent,
+    NopagefoundComponent
   ],
   imports: 
   [

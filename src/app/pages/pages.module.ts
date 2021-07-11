@@ -16,6 +16,8 @@ import { PagesComponent } from './pages.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './administracion/usuarios/usuarios.component';
 import { PagesRoutingModule } from './pages.routing';
+import { ProductosComponent } from './administracion/productos/productos.component';
+import { CategoriasComponent } from './administracion/categorias/categorias.component';
 
 
 
@@ -27,6 +29,8 @@ import { PagesRoutingModule } from './pages.routing';
     PagesComponent,
     PerfilComponent,
     UsuariosComponent,
+    ProductosComponent,
+    CategoriasComponent,
   ],
   imports: 
   [

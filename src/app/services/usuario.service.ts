@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 // Propios
 import { AuthService } from './auth.service';
-import { ObtenerUsuario } from '../interfaces/usuarios.interface';
+import { ObtenerUsuario, UsuarioData } from '../interfaces/usuarios.interface';
 import { Usuario } from '../models/Usuario.model';
 
 const base_url = environment.base_url;
@@ -17,13 +17,21 @@ const base_url = environment.base_url;
 export class UsuarioService 
 {
   public token = '';
+  public ultimaImagen = '';
 
   constructor( private http: HttpClient, private authService: AuthService ) { 
     this.token = authService.token;
   }
 
-  actualizarPerfil( data: object, email: string )
+  crearUsuario( data: UsuarioData)
   {
+    delete data.imagen;
+    return this.http.post(`${ base_url }/usuarios`, data);
+  }
+
+  actualizarPerfil( data: UsuarioData, email: string )
+  {
+    delete data.imagen;
     return this.http.put(`${ base_url }/usuarios/${ email }`, data);
   }
 

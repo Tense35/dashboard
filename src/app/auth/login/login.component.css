@@ -6,7 +6,7 @@
   justify-content: center;
   min-height: 100%;
   width: 100%;
-  background-color: #67757c !important;
+  background-color: #000 !important;
 }
 
 .root
@@ -49,8 +49,8 @@
 .login-logo 
 {
   align-items: center;
-  background-color: #23344D;
-  border: 1px #23344D solid;
+  background-color: #000;
+  border: 1px #000 solid;
   border-bottom-left-radius: 8px;
   justify-content: center;
   border-top-left-radius: 8px;
@@ -65,8 +65,8 @@
 .login-inputs
 {
   align-items: center;
-  background-color: #2E4866;
-  border: 1px #2E4866 solid;
+  background-color: #14213d;
+  border: 1px #14213d solid;
   border-bottom-right-radius: 8px;
   border-top-right-radius: 8px;
   display: flex;
@@ -84,6 +84,7 @@
 {
   font-size: 40px;
   margin: 10px 0px;
+  color: #B59763 !important;
   text-align: center;
 }
 
@@ -108,7 +109,7 @@
 
 .login-inputs input:focus
 {
-  border-bottom: 3px solid #23344D;
+  border-bottom: 3px solid #B59763;
 }
 
 .login-error
@@ -130,7 +131,7 @@
 .login-button button
 {
   background-color: transparent;
-  border: 3px solid #23344D;
+  border: 3px solid #B59763;
   border-radius: 8px;
   color: #FFF;
   cursor: pointer;
@@ -147,7 +148,7 @@
 
 .login-button button:hover
 {
-  background-color: #23344D;
+  background-color: #B59763;
 }
 
 /* Cambiar color del placeholder del input */

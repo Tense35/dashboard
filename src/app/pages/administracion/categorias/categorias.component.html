@@ -1,0 +1,169 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <input class="form-control" type="text" placeholder="Buscar categoría..." (keyup)="buscar( txtBuscar.value )"  #txtBuscar/>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading  -->
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando..</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere..</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla -->
+
+<div class="row animated FadeIn fast" *ngIf="!loading">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 d-flex flex-row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Total de categorías ({{ totalCategorias }})</h4>
+                            <h6 class="card-subtitle">Categorías registradas en la base de datos</h6>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end align-items-center">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#create-modal" data-original-title="Crear"><i class="mdi mdi-plus"></i> Insertar nueva categoría</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="w100">Id</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th class="w100">Estado</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="animated fadeIn fast" *ngFor="let categoria of categorias">
+                                <td>{{ categoria.id_categoria }}</td>
+                                <td>{{ categoria.nombre | titlecase }}</td>
+                                <td>{{ categoria.descripcion | titlecase }}</td>
+                                <td>
+                                    <label *ngIf="categoria.estado" class="label label-primary">Activo</label>
+                                    <label *ngIf="!categoria.estado" class="label label-danger">Inactivo</label>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a title="Editar" class="cursor" (click)="cargarCategoriaSeleccionada(categoria)" data-toggle="modal" data-target="#responsive-modal" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                    <a title="Desactivar" *ngIf="categoria.estado" (click)="eliminar( categoria.id_categoria )" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a title="Activar" *ngIf="!categoria.estado" (click)="activar( categoria.id_categoria )" class="cursor" data-toggle="tooltip" data-original-title="Activar"> <i class="fa fa-check text-primary"></i> </a>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div *ngIf="txtBuscar.value.length === 0" >
+                    <button (click)="cambiarPagina(-10)" class="btn btn-secundary">Anteriores</button>
+                    &nbsp;
+                    <button (click)="cambiarPagina(10)" class="btn btn-secundary">Siguientes</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<!-- Creación -->
+
+<div  id="create-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModal" style="display: none; overflow-y: auto;">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="z-index: -10;">
+            <div class="modal-header">
+                <h4 class="modal-title">Crear categoría</h4>
+                <button type="button" class="close cursor" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="categoriaCreateForm">
+
+                    <div class="form-group">
+                        <label class="control-label">Nombre</label>
+                        <input type="text" formControlName="nombre" class="form-control">
+                        <small *ngIf="validar('nombre', 'categoriaCreateForm')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">Descripción</label>
+                        <input type="text" formControlName="descripcion" class="form-control">
+                        <small *ngIf="validar('descripcion', 'categoriaCreateForm')" class="form-control-feedback text-danger"> La descripcion no es válida </small> 
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" (click)="crear()">Crear categoría</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edición -->
+
+<div  id="responsive-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; overflow-y: auto;">
+    <div class="modal-dialog" >
+        <div class="modal-content" style="z-index: -10;">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar categoría</h4>
+                <button type="button" class="close cursor" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="categoriaForm">
+
+                    <div class="form-group">
+                        <label class="control-label">Identificador</label>
+                        <input readonly type="text" formControlName="id_categoria" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Nombre</label>
+                        <input type="text" formControlName="nombre" class="form-control">
+                        <small *ngIf="validar('nombre', 'categoriaForm')" class="form-control-feedback text-danger"> El nombre no es válido </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Descripción</label>
+                        <input type="text" formControlName="descripcion" class="form-control">
+                        <small *ngIf="validar('descripcion', 'categoriaForm')" class="form-control-feedback text-danger"> La descripción no es válida </small> 
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Estado</label>
+                        <select class="form-control custom-select" formControlName="estado" data-placeholder="Selecciona un estado" tabindex="1">
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                        <small *ngIf="validar('estado', 'categoriaForm')" class="form-control-feedback text-danger"> Debe seleccionar un estado </small>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect waves-light" (click)="modificar()">Guardar los cambios</button>
+                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
