@@ -179,6 +179,12 @@
     background-color: #B59763;
 }
 
+.dn-carrousel
+{
+    width: 40%;
+    height: 50% !important;
+    max-height: 50% !important;
+}
 
 @media screen and (max-width: 840px) 
 {
