@@ -1,46 +1,43 @@
 
-img{
-
-width: 170px;
-height:87px;
-padding-top: 10px;
-padding-left: 70px;
-
+img
+{
+    width: 170px;
+    height:87px;
+    padding-top: 10px;
+    padding-left: 70px;
 }
 
-
-
-
-li{
-
-float: right;
-list-style: none;
-padding: 10px;
-text-orientation: upright;
-
+li
+{
+    float: right;
+    list-style: none;
+    padding: 10px;
+    text-orientation: upright;
 }
 
-nav{
-
-float: right;
-margin-top: 0;
-margin-right: 0;
-background-color: black !important;
+nav 
+{
+    display: flex;
+    justify-content: end;
+    background-color: black !important;
+    padding: 0 !important;
 }
 
-.fa-shopping-bag{
-
-color: aliceblue;
-font-size: 27px;
-
+.navbar-expand-md .navbar-collapse
+{
+    justify-content: flex-end;
+    margin-right: 25px;
 }
 
+.fa-shopping-bag
+{
+    color: aliceblue;
+    font-size: 27px;
+}
 
-
-
-button{
-
-    font-family:"Arial-Rounded", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;;
+button
+{
+    font-family:"Arial-Rounded", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     text-decoration: none;
     color: aliceblue;
@@ -48,54 +45,92 @@ button{
     outline: none;
     font-size: 100% ;
     border: black;
-   
 }
 
-li:hover button{
-
-color: darkgoldenrod;
-
+li:hover button
+{
+    color: darkgoldenrod;
 }
 
-header{
-
-    background-color: black;
-    
-    
-
-}
-ul{
-
+header
+{
     background-color: black;
 }
 
-.container{
-
-float: right;
-background-color: black;
+ul
+{
+    background-color: black;
 }
 
-.navbar navbar-expand-md navbar-dark fixed-top bg-dark{
-
-float: right;
-padding: 0px 0px !important;
-
+.w-100
+{
+    width: 100%;
 }
 
-a {
-background-color: black;
-color: blanchedalmond;
+.container-menu
+{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 !important;
+    background-color: black;
 }
 
-div{
-
-background-color: black;
-
+header 
+{
+    width: 100%;
 }
 
-th{
+.navbar-nav
+{
+    margin: 0 !important;
+}
 
+.collapse .navbar-collapse
+{
+    width: 100%;
+    display: flex;
+    justify-content: end !important;
+}
+
+.navbar .navbar-expand-md .navbar-dark .fixed-top .bg-dark
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 0px !important;
+}
+
+.dropdown-menu.show
+{
+    left: -300px !important;
+}
+
+.dropdown-menu
+{
+    width: 350px;
+}
+
+.nav 
+{
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+a 
+{
+    background-color: black;
     color: blanchedalmond;
+}
 
+div
+{
+    background-color: black;
+}
+
+th
+{
+    color: blanchedalmond;
 }
 

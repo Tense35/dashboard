@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 // Propios
 import { ProductoData } from '../../interfaces/producto.interface';
 import { ProductosService } from '../../services/productos.service';
+import { ShopService } from '../../services/shop.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-productos',
@@ -20,7 +23,16 @@ export class ProductosComponent implements OnInit
   public cantidad = 1;
   public id_producto = this.ruta.snapshot.params.id;
 
-  constructor( private ruta: ActivatedRoute, private productosService: ProductosService ) { }
+  // Form
+  public carritoForm: FormGroup;
+
+  constructor( private ruta: ActivatedRoute, private productosService: ProductosService, private shopService: ShopService, private fb: FormBuilder ) 
+  { 
+    this.carritoForm = this.fb.group
+    ({
+      talla: ['', Validators.required ]
+    });
+  }
 
   ngOnInit(): void 
   {
@@ -47,14 +59,44 @@ export class ProductosComponent implements OnInit
       return;
     }
 
+    // En caso de que se intente superar el stock
+    if ( sumar )
+    {
+      if ( this.cantidad == this.producto.stock )
+      {
+        return
+      }
+    }
+
     this.cantidad = ( sumar )? this.cantidad+1 : this.cantidad-1;
   }
 
   seleccionarColor(color: string = '#000')
   {
     this.colorSeleccionado = color;
-    console.log(this.colorSeleccionado);
   }
 
+  agregarAlCarrito()
+  {
+    if ( this.colorSeleccionado == '' || this.carritoForm.get('talla')?.value == '' || this.cantidad < 0 || this.cantidad > this.producto.stock )
+    {
+      Swal.fire('Error', 'Debes llenar todos los datos', 'warning');
+      return;
+    }
+
+    const producto = 
+    {
+      id_producto: this.producto.id_producto,
+      nombre: this.producto.nombre,
+      imagen: this.producto.imagen,
+      cantidad: this.cantidad,
+      color: this.colorSeleccionado,
+      talla: this.carritoForm.get('talla')?.value,
+      precio: this.producto.precio
+    }
+
+    this.shopService.agregarProducto( producto );
+    Swal.fire('¡Muy bien!', 'El producto se ha agregado al carrito', 'success');
+  }
 
 }
