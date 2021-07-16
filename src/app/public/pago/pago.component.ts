@@ -12,6 +12,7 @@ export class PagoComponent implements OnInit
 {
 
   public tarjetaFrente = true;
+  
 
   public steps = ["Información personal", "Datos de envío", "Realizar pago"];
   public pag = 0;
@@ -23,6 +24,7 @@ export class PagoComponent implements OnInit
   public personalesForm: FormGroup;
   public envioForm: FormGroup;
   public pagoForm: FormGroup;
+  
 
   // Años
   public cardYears: string[];
@@ -69,7 +71,9 @@ export class PagoComponent implements OnInit
       terms: ['', [Validators.required, Validators.requiredTrue] ],
     });
 
+    
   }
+  
   
   ngOnInit() 
   {
