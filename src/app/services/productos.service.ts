@@ -14,6 +14,8 @@ export class ProductosService
 {
 
   public productos = [];
+  public productosDestacados = [];
+
 
   constructor( private http:HttpClient) { }
 
@@ -85,4 +87,24 @@ export class ProductosService
       );
   }
 
+  // Obtener productos destacados
+  obtenerProductosDestacados( estado: string = 'true' )
+  {
+    
+
+    return this.http.get(`${ base_url }/productos?estado=${ estado }&destacado=true`)
+    .pipe
+    (
+      map( (resp: any) => 
+      {
+        this.productosDestacados = resp.data;
+        console.log(resp.data);
+        return  resp;
+      })
+    );
+
+  }
+
 }
+
+
