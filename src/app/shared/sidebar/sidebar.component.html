@@ -11,8 +11,6 @@
                     <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="userData.imagen" alt="user" /><span class="hide-menu">{{ userData.nombre | titlecase }} </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLinkActive="active" routerLink="./perfil">Mi perfil </a></li>
-                        <li><a href="javascript:void()">My Balance</a></li>
-                        <li><a href="javascript:void()">Inbox</a></li>
                         <li><a routerLink="account-settings">Ajustes </a></li>
                         <li><a  (click)="logout()" class="cursor">Logout</a></li>
                     </ul>

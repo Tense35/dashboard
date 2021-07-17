@@ -21,10 +21,13 @@
             <i [class]="producto.genero | genero"></i>
 
             <b>Talla</b> 
-            <select aria-label="Selecciona una talla">
-            <option value="" selected>Selecciona una talla</option>
-            <option *ngFor="let talla of tallas" [value]="talla">{{talla}}</option>
-            </select>
+
+            <form [formGroup]="carritoForm">
+                <select aria-label="Selecciona una talla" formControlName="talla">
+                    <option value="" selected>Selecciona una talla</option>
+                    <option *ngFor="let talla of tallas" [value]="talla">{{talla}}</option>
+                </select>
+            </form>
     
             <b>Colores disponibles</b> 
             <div class="input-group">
@@ -52,7 +55,7 @@
             <b>Total</b>
             <p>$ {{ producto.precio*cantidad }}</p>
     
-            <button class="btn">Añadir al carrito!</button>
+            <button class="btn" (click)="agregarAlCarrito()">Añadir al carrito!</button>
   
         </div>
   

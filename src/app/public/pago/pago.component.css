@@ -242,6 +242,12 @@
 {
     background: url(../../../assets/images/GoldKids/Cards/Fondos/bg-tarjeta-07.jpg);
 }
+.tarjeta-nequi
+{
+    background: url(../../../assets/images/GoldKids/Cards/Fondos/bg-tarjeta-11.jpg);
+}
+
+
 
 .frente .logo-marca
 {
@@ -264,12 +270,21 @@
     margin-bottom: 20px;
 }
 
-.frente .grupo .label 
-{
+
+
+.label-nequi{
+    font-size: 16px;
+    color:#f4f4f4;
+    margin-bottom: 5px;
+}
+
+.label-card{
     font-size: 16px;
     color: #333333;
     margin-bottom: 5px;
 }
+
+
 
 .grupo .label 
 {
