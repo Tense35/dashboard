@@ -15,12 +15,14 @@ export class InicioComponent implements OnInit
 
   public productos: ProductoData[] = [];
   public categorias: CategoriaData[] = [];
+  public productosDestacados: ProductoData[] = [];
 
   constructor( private categoriasService:CategoriasService, private productosService:ProductosService ) { }
 
   ngOnInit(): void 
   {
     this.obtenerProductos();
+    this.obtenerProductosDestacados();
     this.obtenerCategorias();
   }
 
@@ -31,6 +33,17 @@ export class InicioComponent implements OnInit
       {
         this.productos = resp.data;
       }); 
+  }
+
+  obtenerProductosDestacados(estado:string='true'){
+    this.productosService.obtenerProductosDestacados(estado)
+    .subscribe( respuesta=>
+     {
+       this.productosDestacados=respuesta.data;
+     } )
+
+    
+
   }
 
   obtenerCategorias()
