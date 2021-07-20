@@ -68,7 +68,7 @@ export class PagoComponent implements OnInit
       exp_month: ['', Validators.required ],
       exp_year: ['', Validators.required ],
       cvc: ['', [Validators.required, Validators.pattern('[0-9.]{3}')] ],
-      terms: ['', [Validators.required, Validators.requiredTrue] ],
+      terms: ['true', [Validators.required] ],
     });
 
     

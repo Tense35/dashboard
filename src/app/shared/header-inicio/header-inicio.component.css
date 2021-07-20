@@ -49,6 +49,7 @@ button
 li:hover button
 {
     color: darkgoldenrod;
+    cursor: pointer;
 }
 
 header
@@ -136,4 +137,21 @@ th
 td {
     color: #FFFFFF;
 }
+i:hover 
+{
+    color: darkgoldenrod;
+    cursor: pointer;
+}
 
+a.btn.btn-primary.btn-block{
+
+color: aliceblue !important;
+
+
+}
+
+a{
+
+color: aliceblue;
+
+}
