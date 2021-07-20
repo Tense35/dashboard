@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WompiService } from '../../services/wompi.service';
 import { TokenAceptacionWompi } from '../../interfaces/wompi.interface';
+import { ShopService } from '../../services/shop.service';
 
 @Component({
   selector: 'app-pago',
@@ -40,7 +41,7 @@ export class PagoComponent implements OnInit
   // Pruebas
 
 
-  constructor( private fb:FormBuilder, private wompiService: WompiService ) 
+  constructor( private fb:FormBuilder, private wompiService: WompiService, private shopService: ShopService ) 
   { 
     this.cardYears = this.getYears();
 
@@ -162,6 +163,25 @@ export class PagoComponent implements OnInit
   nextStape( form: string )
   {
     this.revisarValidaciones(form);
+
+    if ( this.pag == this.steps.length-1 && this.pagoForm.valid )
+    {
+
+      console.log(this.personalesForm.value);
+      console.log(this.envioForm.value);
+      console.log(this.pagoForm.value);
+
+      const token_card = this.wompiService.tokenTarjeta(this.pagoForm.value).subscribe( (resp: any) => resp.data.id);
+
+      const others =
+      {
+        acceptance_token: this.tokenTerminos.acceptance_token,
+        total: this.shopService.getTotalInCents(),
+        token_card
+      }
+
+      this.wompiService.transactionOrder(this.personalesForm.value, this.envioForm.value, this.pagoForm.value, others );
+    }
 
     // @ts-ignore
     if ( this.pag < this.steps.length && this[form].valid )
