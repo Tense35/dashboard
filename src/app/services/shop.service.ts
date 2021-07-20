@@ -13,7 +13,14 @@ export class ShopService
 
   constructor() 
   { 
-    
+
+    if ( localStorage.getItem('shop') )
+    {
+      this.productosShop = JSON.parse(localStorage.getItem('shop') || '');
+      this.productos$.emit(this.productosShop);
+      console.log('Entra en constructor');
+    }
+   
   }
 
   agregarProducto( producto: shopInterface)
@@ -39,6 +46,9 @@ export class ShopService
     }
 
     this.productos$.emit(this.productosShop);
+
+    // Agregar al local Storage
+    localStorage.setItem("shop", JSON.stringify(this.productosShop));
   }
 
   vaciarCarrito()
@@ -55,7 +65,20 @@ export class ShopService
     {
       this.productosShop.splice( index, 1 );
       this.productos$.emit(this.productosShop);
+      localStorage.setItem("shop", JSON.stringify(this.productosShop));
     }
+  }
+
+  getTotalInCents()
+  {
+    let total = 0;
+    for (let producto of this.productosShop )
+    {
+      console.log(producto);
+      total+= producto.total;
+    }
+
+    return total * 100;
   }
 
 }

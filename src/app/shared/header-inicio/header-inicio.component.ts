@@ -18,6 +18,12 @@ export class HeaderInicioComponent implements OnInit, OnDestroy
 
   ngOnInit(): void 
   {
+
+    if ( localStorage.getItem('shop') )
+    {
+      this.productosCarrito = JSON.parse(localStorage.getItem('shop') || '');
+    }
+
     this.productoSubscription = this.shopService.productos$.subscribe( ( resp: any ) => 
     {
       this.productosCarrito = resp;
