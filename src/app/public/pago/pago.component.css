@@ -404,12 +404,13 @@
 
 .check
 {
-    padding: 5px;
+    color:#f4f4f4;
+    padding: 0;
 }
 
 .resaltado
 {
-    color: #7D5009;
+    color: #fca311;
 }
 
 .check-form

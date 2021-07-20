@@ -119,7 +119,8 @@
                   <div  [className]="( (pagoForm.get('payment_method_type')?.value || 'NEQUI') == 'NEQUI')? 'frente tarjeta-nequi' : 'frente tarjeta-card'">
       
                     <div class="logo-marca">
-                      <img src="./../../../assets/images/GoldKids/Cards/Iconos/visa.png" alt="">
+                      <img *ngIf=" (pagoForm.get('payment_method_type')?.value || 'NEQUI') == 'CARD'" src="../../../assets/images/GoldKids/Cards/Iconos/visa.png" alt="">
+                      <img *ngIf=" (pagoForm.get('payment_method_type')?.value || 'NEQUI') == 'NEQUI'" src="../../../assets/images/GoldKids/Cards/Iconos/nequi5.png" alt="">
                     </div>
       
                     <img class="chip" src="./../../../assets/images/GoldKids/Cards/Iconos/chip-tarjeta.png" alt="Chip">
@@ -186,7 +187,7 @@
             </div>
     
             <!-- Form Tarjeta -->
-    
+          
             <span class="dn-input-info dn-mt1">Número de la tarjeta</span>
             <input type="text" formControlName="number" maxlength="16" (click)="tarjetaFrente = true">
             <label *ngIf="validar('number', 'pagoForm')" class="lbl-error">El número no es válido.</label>
