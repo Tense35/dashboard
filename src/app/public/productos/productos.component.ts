@@ -90,6 +90,7 @@ export class ProductosComponent implements OnInit
       nombre: this.producto.nombre,
       imagen: this.producto.imagen,
       cantidad: this.cantidad,
+      stock: this.producto.stock,
       color: this.colorSeleccionado,
       talla: this.carritoForm.get('talla')?.value,
       precio: this.producto.precio
