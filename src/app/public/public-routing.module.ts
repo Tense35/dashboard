@@ -11,6 +11,7 @@ import { ProductosComponent } from './productos/productos.component';
 import { PublicComponent } from './public.component';
 import { InfoProductosComponent } from './info-productos/info-productos.component';
 import { ServiciosComponent } from './servicios/servicios.component';
+import { PedidoComponent } from './pedido/pedido.component';
 
 const routes: Routes = 
 [
@@ -26,6 +27,7 @@ const routes: Routes =
       { path: 'pago', component: PagoComponent, data: { titulo: 'Pago - GoldKids' } },
       { path: 'producto/:id', component: ProductosComponent, data: { titulo: 'Producto - GoldKids' } },
       { path: 'servicios', component: ServiciosComponent, data: { titulo: 'Servicios - GoldKids' } },
+      { path: 'pedido', component: PedidoComponent, data: { titulo: 'pedido - GoldKids' } },
       { path: '**', redirectTo: 'inicio' }
     ]
   },
