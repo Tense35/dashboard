@@ -34,11 +34,20 @@ export class PedidoComponent implements OnInit
     ( 
       (resp: any) => 
       {
-        Swal.fire( 'Estado de transacción', `El estado de su transacción es: ${ resp.data.status }. Si tiene algún problema, contacte al email ElizaAdmin@gmail.com`, 'success' )
+
+        if ( resp.data.status == 'DECLINED')
+        {
+          Swal.fire( 'Estado de transacción', `El estado de su transacción es: ${ resp.data.status }. Su pedido está a la espera de ser despachado, si tiene algún problema, contacte al email ElizaAdmin@gmail.com o con su banco.`, 'warning' );
+        }
+        else 
+        {
+          Swal.fire( 'Estado de transacción', `El estado de su transacción es: ${ resp.data.status }. Si tiene algún problema, contacte al email ElizaAdmin@gmail.com`, 'success' );
+        }
+
       }, 
       error => 
       {
-        Swal.fire( 'Estado de transacción', `El identificador de la transacción no es correcto. Si tiene algún problema, contacte al email ElizaAdmin@gmail.com`, 'error' )
+        Swal.fire( 'Estado de transacción', `El identificador de la transacción no es correcto. Si tiene algún problema, contacte al email ElizaAdmin@gmail.com`, 'error' );
       }
     );
     

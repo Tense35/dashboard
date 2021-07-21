@@ -1,50 +1,60 @@
-.pedido{
-
-background-color:#14213d ;
-width: 450px;
-height: 350px;
-text-align: center;
-margin-bottom: 100px;
-border-radius: 10px;
-
-}
-
-h1{
-
-font-weight: bold;
-color:#fca311 ;
-
-}
-
-.body{
-
-background-color: black;
-display: flex;
-width: 100%;
-justify-content: center;
-
-}
-
-
-button{
-
-    color: blanchedalmond;
-    font-weight: bold;
-    text-decoration: rgb(245, 243, 243);
-    background-color:#fca311 ;
+.pedido 
+{
+    background-color: #14213d;
+    width: 600px;
+    height: 350px;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
     border-radius: 10px;
+}
 
+h2 
+{
+    font-weight: bold;
+    margin-top: 10px;
+    font-family: "Arial-Rounded-Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 50px;
+    color: #fca311;
+}
+
+.body {
+    background-color: black;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+button 
+{
+    font-family: "Arial-Rounded-Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: transparent;
+    font-size: 23px;
+    margin-top: 40px;
+    border-radius: 8px;
+    width: 450px;
+    cursor: pointer;
+    border: 3px solid #fca311;
+    color: #FFF;
+    padding: 10px 10px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0,0.8);
 }
 
 button:hover 
 {
-   background-color: rgb(7, 26, 112);
-    cursor: pointer;
-    
-
+    box-shadow: 0 5px 5px rgba(252, 163, 17,0.5);
+    background-color: #fca311;
+    color: #FFF;
 }
-input{
 
-    border-radius: 10px;
-
+.buscador
+{
+    font-family: "Arial-Rounded-Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #000;
+    border-radius: 8px;
+    width: 350px;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 5px;
+    border: 1px solid #FFF;
 }
