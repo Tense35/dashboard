@@ -1,15 +1,47 @@
 import { Component, OnInit } from '@angular/core';
+import { WompiService } from '../../services/wompi.service';
+import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pedido',
   templateUrl: './pedido.component.html',
   styleUrls: ['./pedido.component.css']
 })
-export class PedidoComponent implements OnInit {
+export class PedidoComponent implements OnInit 
+{
 
-  constructor() { }
+  public consultaForm: FormGroup;
 
-  ngOnInit(): void {
+  constructor( private wompiService: WompiService, private fb: FormBuilder ) 
+  {
+    this.consultaForm = this.fb.group
+    ({
+      reference: ['', [Validators.required] ]
+    })
+  }
+
+  ngOnInit(): void 
+  {
+    
+  }
+
+  consultarInformacion()
+  {
+    
+    this.wompiService.verifyTransactionStatus(this.consultaForm.get('reference')?.value)
+    .subscribe
+    ( 
+      (resp: any) => 
+      {
+        Swal.fire( 'Estado de transacción', `El estado de su transacción es: ${ resp.data.status }. Si tiene algún problema, contacte al email ElizaAdmin@gmail.com`, 'success' )
+      }, 
+      error => 
+      {
+        Swal.fire( 'Estado de transacción', `El identificador de la transacción no es correcto. Si tiene algún problema, contacte al email ElizaAdmin@gmail.com`, 'error' )
+      }
+    );
+    
   }
 
 }

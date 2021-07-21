@@ -11,6 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { HeaderInicioComponent } from './header-inicio/header-inicio.component';
 import { PrimengModule } from '../primeng/primeng.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -27,6 +28,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: 
   [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule,
     PrimengModule
   ],

@@ -96,9 +96,15 @@ export class WompiService
     });
   }
 
-  verifyTransactionStatus( transactionId = 1 )
+  verifyTransactionStatus( transactionId: string)
   {
-    return this.http.get(`${ this.wompi_url }/transactions/${ transactionId }` );
+    return this.http.get(`${ this.wompi_url }/transactions/${ transactionId }`, 
+    { 
+      headers:  
+      {
+        'Authorization': `Bearer ${ this.wompi_token }`
+      }
+    });
   }
 
 

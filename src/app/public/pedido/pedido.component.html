@@ -2,15 +2,17 @@
 <div class="body">
 
     <div class="pedido">
-<br>
+        <br>
         <h1>Consultar mi pedido</h1>
         <br>
         <br>
-     
-        <input type="text" placeholder="numero de referencia"><br>
+        <form [formGroup]="consultaForm">
+            <input type="text" formControlName="reference" placeholder="Número de referencia"><br>
+        </form>
+        
         <br>
         <br>
-        <button>Consultar</button>
+        <button (click)="consultarInformacion()">Consultar</button>
     
     
     </div>

@@ -201,8 +201,8 @@ export class PagoComponent implements OnInit
             this.wompiService.transaccionTarjeta(transactionData).subscribe( (resp: any) => 
             {
               console.log(resp);
-              Swal.fire('Información', `Su compra está siendo procesada y su estado es: ${ resp.data.status }. La referencia de su pedido es: ${ resp.data.reference }, guarde esta referencia y puede consultar el estado de la transacción en el área de "Mi pedido"`, 'info');
-              this.emailService.enviarEmail( resp.data.customer_email, `Apreciado ${ resp.data.customer_data.full_name }, le informamos que se que se está procesando la transacción de su compra y podrá verificar el estado de la transferencia en nuestro sitio web en la pestaña "Mi pedido". Su código de referencia es: ${ resp.data.reference }` ).subscribe( resp => console.log(resp));
+              Swal.fire('Información', `Su compra está siendo procesada y su estado es: ${ resp.data.status }. La referencia de su pedido es: ${ resp.data.id }, guarde esta referencia y puede consultar el estado de la transacción en el área de "Mi pedido"`, 'info');
+              this.emailService.enviarEmail( resp.data.customer_email, `Apreciado ${ resp.data.customer_data.full_name }, le informamos que se que se está procesando la transacción de su compra y podrá verificar el estado de la transferencia en nuestro sitio web en la pestaña "Mi pedido". Su código de referencia es: ${ resp.data.id }` ).subscribe( resp => console.log(resp));
             })
           }, 
           error => 
