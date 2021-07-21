@@ -1,91 +1,41 @@
-<div class="dn-container">
-     <div class="contededor">
 
-     <div class="dn-center">
+<div>
 
-             <div class="tabla">
-                        <h2>Conjunto niña</h2>
-                        <img src="../../../assets/images/GoldKids/prendas/conjuntonias/2A.jpg" alt="">
-                        <p>Tallas:2,3,4,6,8,10</p>
-                        <p>Cantidad:1</p>
-                        <h3>24900 <sup>$ </sup></h3>
-                        <a href=""class="boton">Eliminar</a>
-                </div>
-                <div class="tabla">
-                        <h2>Conjunto niña</h2>
-                        <img src="../../../assets/images/GoldKids/prendas/conjuntonias/1A.jpg" alt="">
-                        <p>Tallas:1,2,4,6</p>
-                        <p>Cantidad:1</p>
-                        <h3>34000 <sup>$ </sup></h3>
-                    <a href=""class="boton">Eliminar</a>
-                </div>
+    <table>
 
-                <div class="tabla">
-                        <h2>Conjunto niña</h2>
-                        <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-                        <p>Tallas:1,2,4,6</p>
-                        <p>Cantidad:1</p>
-                        <h3>24900 <sup>$ </sup></h3>
-                    <a href=""class="boton">Eliminar</a>
-                </div>
-
-                <div class="tabla">
-                    <h2>Conjunto niña</h2>
-                    <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-                    <p>Tallas:1,2,4,6</p>
-                    <p>Cantidad:1</p>
-                    <h3>24900 <sup>$ </sup></h3>
-                <a href=""class="boton">Eliminar</a>
-            </div>
-
-            <div class="tabla">
-                <h2>Conjunto niña</h2>
-                <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-                <p>Tallas:1,2,4,6</p>
-                <p>Cantidad:1</p>
-                <h3>24900 <sup>$ </sup></h3>
-            <a href=""class="boton">Eliminar</a>
-        </div>
-
-        <div class="tabla">
-            <h2>Conjunto niña</h2>
-            <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-            <p>Tallas:1,2,4,6</p>
-            <p>Cantidad:1</p>
-            <h3>24900 <sup>$ </sup></h3>
-        <a href=""class="boton">Eliminar</a>
-    </div>
-
-    <div class="tabla">
-        <h2>Conjunto niña</h2>
-        <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-        <p>Tallas:1,2,4,6</p>
-        <p>Cantidad:1</p>
-        <h3>24900 <sup>$ </sup></h3>
-    <a href=""class="boton">Eliminar</a>
-</div>
-
-<div class="tabla">
-    <h2>Conjunto niña</h2>
-    <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-    <p>Tallas:1,2,4,6</p>
-    <p>Cantidad:1</p>
-    <h3>24900 <sup>$ </sup></h3>
-<a href=""class="boton">Eliminar</a>
-</div>
-
-<div class="tabla">
-    <h2>Conjunto niña</h2>
-    <img src="../../../assets/images/GoldKids/prendas/conjuntonias/3A.jpg" alt="">
-    <p>Tallas:1,2,4,6</p>
-    <p>Cantidad:1</p>
-    <h3>24900 <sup>$ </sup></h3>
-<a href=""class="boton">Eliminar</a>
-</div>
-
+        <tr>
+        <td>Nombre</td>
+        <td>Imagen</td>
+        <td>Talla</td>
+        <td>Color</td>
+        <td>Cantidad</td>
+        <td>Total</td>
+        <td></td>
+        </tr>
+        
+        <tr *ngFor="let pedido of infoProductos; index as i">
+        <td>{{ pedido.nombre }}</td>
+        <td><img [src]="pedido.imagen" [alt]="pedido.nombre"></td>
+        <td>{{ pedido.talla }}</td>
+        <td><div class="input-group">
+            <ul class="icolors">
+                <li 
+                    [ngStyle]="{'background-color': pedido.color}"
+                    >
+                </li>
                 
+            </ul>
+        </div></td>
+        <td>{{ pedido.cantidad }}</td>
+        <td>{{ pedido.total }}</td>
+        <td><button (click)="eliminarProducto(i)">Eliminar</button></td>
 
-          </div>
+        </tr>
 
-        </div>
- </div>
+        
+        
+        
+        </table>
+
+</div>
+
