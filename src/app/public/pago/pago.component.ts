@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WompiService } from '../../services/wompi.service';
 import { TokenAceptacionWompi } from '../../interfaces/wompi.interface';
 import { ShopService } from '../../services/shop.service';
+import Swal from 'sweetalert2';
+import { EmailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-pago',
@@ -17,6 +19,8 @@ export class PagoComponent implements OnInit
 
   public steps = ["Información personal", "Datos de envío", "Realizar pago"];
   public pag = 0;
+
+  public interval: any;
 
   // Data
   public tokenTerminos: TokenAceptacionWompi = {acceptance_token: '', permalink: '', type: ''};
@@ -41,7 +45,7 @@ export class PagoComponent implements OnInit
   // Pruebas
 
 
-  constructor( private fb:FormBuilder, private wompiService: WompiService, private shopService: ShopService ) 
+  constructor( private fb:FormBuilder, private wompiService: WompiService, private shopService: ShopService, private emailService: EmailService ) 
   { 
     this.cardYears = this.getYears();
 
@@ -63,12 +67,12 @@ export class PagoComponent implements OnInit
 
     this.pagoForm = this.fb.group
     ({
-      payment_method_type: ['', [Validators.required] ],
-      number: ['', [Validators.required, Validators.minLength(16)] ],
-      card_holder: ['', [Validators.required, Validators.pattern('[a-zA-Z ]{10,40}')] ],
-      exp_month: ['', Validators.required ],
-      exp_year: ['', Validators.required ],
-      cvc: ['', [Validators.required, Validators.pattern('[0-9.]{3}')] ],
+      payment_method_type: ['NEQUI', [Validators.required] ],
+      number: ['4242424242424242', [Validators.required, Validators.minLength(16)] ],
+      card_holder: ['Daniel Salazar', [Validators.required, Validators.pattern('[a-zA-Z ]{10,40}')] ],
+      exp_month: ['02', Validators.required ],
+      exp_year: ['25', Validators.required ],
+      cvc: ['142', [Validators.required, Validators.pattern('[0-9.]{3}')] ],
       terms: ['true', [Validators.required] ],
     });
 
@@ -163,31 +167,94 @@ export class PagoComponent implements OnInit
   nextStape( form: string )
   {
     this.revisarValidaciones(form);
+    console.log(this.pag);
 
-    if ( this.pag == this.steps.length-1 && this.pagoForm.valid )
+    if ( this.pag == 2 && this.pagoForm.valid )
     {
 
       console.log(this.personalesForm.value);
       console.log(this.envioForm.value);
       console.log(this.pagoForm.value);
 
-      const token_card = this.wompiService.tokenTarjeta(this.pagoForm.value).subscribe( (resp: any) => resp.data.id);
-
-      const others =
+      const cardData = 
       {
-        acceptance_token: this.tokenTerminos.acceptance_token,
-        total: this.shopService.getTotalInCents(),
-        token_card
+        "number": this.pagoForm.get('number')?.value,
+        "cvc": this.pagoForm.get('cvc')?.value,
+        "exp_month": this.pagoForm.get('exp_month')?.value,
+        "exp_year": this.pagoForm.get('exp_year')?.value,
+        "card_holder": this.pagoForm.get('card_holder')?.value
       }
 
-      this.wompiService.transactionOrder(this.personalesForm.value, this.envioForm.value, this.pagoForm.value, others );
+      this.wompiService.tokenTarjeta(cardData)
+        .subscribe
+        ( 
+          (resp: any) => 
+          {
+            const others =
+            {
+              acceptance_token: this.tokenTerminos.acceptance_token,
+              total: this.shopService.getTotalInCents(),
+              token_card: resp.data.id
+            }
+
+            const transactionData = this.transactionOrder(this.personalesForm.value, this.envioForm.value, this.pagoForm.value, others );
+            this.wompiService.transaccionTarjeta(transactionData).subscribe( (resp: any) => 
+            {
+              console.log(resp);
+              Swal.fire('Información', `Su compra está siendo procesada y su estado es: ${ resp.data.status }. La referencia de su pedido es: ${ resp.data.reference }, guarde esta referencia y puede consultar el estado de la transacción en el área de "Mi pedido"`, 'info');
+              this.emailService.enviarEmail( resp.data.customer_email, `Apreciado ${ resp.data.customer_data.full_name }, le informamos que se que se está procesando la transacción de su compra y podrá verificar el estado de la transferencia en nuestro sitio web en la pestaña "Mi pedido". Su código de referencia es: ${ resp.data.reference }` ).subscribe( resp => console.log(resp));
+            })
+          }, 
+          error => 
+          { 
+            console.log(error.error.error.messages.number[0])
+            Swal.fire('Compra', `${ error.error.error.messages.number[0] }`, 'error');
+            return;
+          });
+      
     }
 
     // @ts-ignore
-    if ( this.pag < this.steps.length && this[form].valid )
+    if ( this.pag < this.steps.length-1 && this[form].valid )
     {
       this.pag+=1;
     }
+  }
+
+  transactionOrder( personal: any, adress: any, pay: any, varios: any )
+  {
+    const data = 
+    {
+      acceptance_token: varios.acceptance_token,
+      amount_in_cents: varios.total,
+      currency: "COP",
+      customer_email: personal.email,
+      payment_method:
+      {
+        type: "CARD",
+        token: (varios.token_card.toString()),
+        installments: 1
+      },
+      redirect_url: "https://mitienda.com.co/pago/resultado",
+      reference: (Math.round(Math.random()*1000000)).toString(),
+      customer_data: 
+      {
+        phone_number: personal.celular,
+        full_name: personal.nombre
+      },
+      shipping_address:
+      {
+        address_line_1: adress.tempDireccion,
+        address_line_2: "No especificada",
+        country: "CO",
+        region: "Antioquia",
+        city: adress.municipio,
+        name: personal.nombre,
+        phone_number: personal.celular
+      }
+    }
+
+    return data;
   }
 
 }
