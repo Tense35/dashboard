@@ -1,88 +1,72 @@
-.dn-container
-{
-    flex-direction: column;
-    align-items: center;
-    background-color: #000;
-}
+tr{
 
-.contenedor{
-    width: 100%;
-    min-height: 100vh;
-    background-color:#000000;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    font-family: "Arial-Rounded-Bold", 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-     
-}
-
-.dn-center
-{
-    margin-top: 130px;
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
-    flex-direction: row;
+color:white;
+border: white 2px solid;
 
 }
 
+img{
 
-.tabla{
-    width:500%;
-    height:550%;
-    margin:auto;
-    border:1px solid black;
-    border-radius:4px;
-    box-shadow:0px 0px 4px 0px;
-    padding:60px;
-    text-align: center;
-    flex-grow:1;
-    color:#FFFFFF;
-    font-weight: bold;
+width: 150px;
+height: 150px;
+
+
+}
+
+td{
+
+ margin-left: 5px;
+
+
+}
+
+table{
+
   
+    border-collapse: separate;
+    border-spacing: 100px 7px;
+    border: rgb(238, 151, 79) 5px solid;
 }
 
-.tabla img {
-    width:150px;
-    margin-bottom:150px;
+div{
 
-}
-.tabla>h2{
-    font-size:30px;
-    margin-bottom:35px;
-    color:#FFFFFF;
-   font-weight: bold;
-     
+    background-color: black;
+    justify-content: center;
+    display: flex;
 }
 
-.tabla>h3{
-    font-size:30px;
-    margin-bottom:35px;
-    color:#FFFFFF;
-   font-weight: bold;
-
-} 
-
-.tabla>p{
-   display:#FFFFFF;
-    margin-bottom:35px;
-     
+.icolors, .icheck-list 
+{
+  padding: 0;
+  margin: 0;
+  list-style: none; 
 }
 
-.boton{
-    display:inline-block;
-    width:200px;
-    padding:12px;
-    text-decoration:none;
-    border: 1px solid #B59763;
-    background-color: #B59763;
-    color:#FFFFFF ;
-    text-align:center;
-    font-size:14px;
-    font-weight:600;
-    margin:auto;
-    color:#FFFFFF;
-   font-weight: bold;
+.icolors > li 
+{
+  padding: 0;
+  cursor: pointer;
+  margin: 2px;
+  float: left;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  background: #263238;
+  text-align: center; 
+}
 
+.icolors > li.active:after 
+{
+  content: "\2713 ";
+  color: #ffffff;
+  line-height: 30px; }
+
+.icolors > li:first-child 
+{
+  margin-left: 0; 
+}
+
+td button{
+    border-radius: 10px;
+    font-weight: bold;
 }

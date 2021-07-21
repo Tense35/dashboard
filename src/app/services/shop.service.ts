@@ -57,9 +57,9 @@ export class ShopService
     this.productos$.emit(this.productosShop);
   }
 
-  borrarProducto( id: number | string )
+  borrarProducto( index: number | string )
   {
-    const index = this.productosShop.indexOf(this.productosShop.find( ( item: shopInterface ) => item.id_producto == id ));
+    
 
     if ( index != -1 )
     {
