@@ -19,6 +19,7 @@ import { PublicRoutingModule } from './public-routing.module';
 import { ServiciosComponent } from './servicios/servicios.component';
 import { SharedModule } from '../shared/shared.module';
 import { InfoProductosComponent } from './info-productos/info-productos.component';
+import { PedidoComponent } from './pedido/pedido.component';
 
 
 
@@ -37,6 +38,7 @@ import { InfoProductosComponent } from './info-productos/info-productos.componen
     PublicComponent,
     ServiciosComponent,
     InfoProductosComponent,
+    PedidoComponent,
   ],
   imports: 
   [
