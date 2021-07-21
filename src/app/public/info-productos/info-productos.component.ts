@@ -6,34 +6,29 @@ import { ShopService } from 'src/app/services/shop.service';
   templateUrl: './info-productos.component.html',
   styleUrls: ['./info-productos.component.css']
 })
-export class InfoProductosComponent implements OnInit, OnDestroy {
+export class InfoProductosComponent implements OnInit {
 
   public infoProductos:any = [];
-  public productoSubscripcion:any;
 
-  constructor(private shopService: ShopService) {
+  constructor(private shopService: ShopService) 
+  {
+
   }
 
-  
-
-  ngOnInit(): void {
-   this.productoSubscripcion=this.shopService.productos$.subscribe( (resp:any) =>
-   {
-     console.log('-----');
-     console.log(resp);
-     console.log(this.infoProductos);
-     this.infoProductos=resp;
-   })
+  ngOnInit(): void 
+  {
+    if ( localStorage.getItem('shop') )
+    {
+      this.infoProductos = JSON.parse(localStorage.getItem('shop') || '');
+    }
+    
+    this.infoProductos = this.shopService.productosShop;
   }
 
-  ngOnDestroy(): void {
-    this.productoSubscripcion.unsubscribe();
-  }
-
-  eliminarProducto(indice:number){
-   
+  eliminarProducto(indice:number)
+  { 
     this.shopService.borrarProducto(indice);
-
+    this.infoProductos = this.shopService.productosShop;
   }
 
 }

@@ -9,6 +9,7 @@ export class ShopService
 
   public productosShop: any = [];
   public productos$ = new EventEmitter<[]>();
+  public productos2$ = new EventEmitter<[]>();
   
 
   constructor() 
@@ -18,7 +19,7 @@ export class ShopService
     {
       this.productosShop = JSON.parse(localStorage.getItem('shop') || '');
       this.productos$.emit(this.productosShop);
-      console.log('Entra en constructor');
+      this.productos2$.emit(this.productosShop);
     }
    
   }
@@ -46,6 +47,7 @@ export class ShopService
     }
 
     this.productos$.emit(this.productosShop);
+    this.productos2$.emit(this.productosShop);
 
     // Agregar al local Storage
     localStorage.setItem("shop", JSON.stringify(this.productosShop));
@@ -55,6 +57,7 @@ export class ShopService
   {
     this.productosShop = [];
     this.productos$.emit(this.productosShop);
+    this.productos2$.emit(this.productosShop);
   }
 
   borrarProducto( index: number | string )
@@ -65,6 +68,7 @@ export class ShopService
     {
       this.productosShop.splice( index, 1 );
       this.productos$.emit(this.productosShop);
+      this.productos2$.emit(this.productosShop);
       localStorage.setItem("shop", JSON.stringify(this.productosShop));
     }
   }

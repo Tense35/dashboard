@@ -20,12 +20,18 @@ td{
 
 }
 
-table{
+button 
+{
+  cursor: pointer;
+}
 
-  
-    border-collapse: separate;
-    border-spacing: 100px 7px;
-    border: rgb(238, 151, 79) 5px solid;
+table
+{
+  border-collapse: separate;
+  border-spacing: 100px 7px;
+  border: rgb(238, 151, 79) 5px solid;
+  margin-top: 30px;
+  margin-bottom: 150px;
 }
 
 div{
@@ -70,3 +76,4 @@ td button{
     border-radius: 10px;
     font-weight: bold;
 }
+
